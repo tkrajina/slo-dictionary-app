@@ -1,13 +1,10 @@
 ANDROID_SDK_ROOT=~/Library/Android/sdk
 XCODE_APPS=/Applications/Xcode.app/Contents/Developer/Applications
+IMPORTER_PATH=${GOPATH}/src/github.com/tkrajina/slo-dictionary-importer
 
 .PHONY: generate-images
 generate-images:
 	tools/create_pngs.sh
-
-.PHONY: import-db
-import-db:
-	cp $(GOPATH)/src/github.com/tkrajina/slo-dictionary-importer/dict.sqlite3 assets/db/dict.sqlite
 
 .PHONY: npm-reinstall
 npm-reinstall:
@@ -37,6 +34,22 @@ prettier:
 .PHONY: expo
 expo:
 	expo start
+
+####################################################################################################
+
+.PHONY: build-db
+build-db:
+	cd $(IMPORTER_PATH) && make build-db
+
+.PHONY: import-db
+import-db:
+	cp $(IMPORTER_PATH)/dict.sqlite3 assets/db/dict.sqlite
+
+.PHONY: build-and-import-db
+build-and-import-db: build-db import-db
+	echo "OK"
+
+####################################################################################################
 
 .PHONY: ios-simulator
 ios-simulator:
