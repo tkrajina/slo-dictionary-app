@@ -7,9 +7,10 @@ import { SafeAreaView } from "react-navigation";
 import { Center } from "./components/Center";
 import { AUTORENEW_24PX, BASELINE_INFO_24PX, BASELINE_SEARCH_24PX } from "./images_generated";
 import { Routes, Stacks } from "./routes";
+import CollocationsSearchScreen from "./screens/CollocationsSearchScreen";
 import InfoScreen from "./screens/InfoScreen";
 import RandomScreen from "./screens/RandomScreen";
-import SearchScreen from "./screens/SearchScreen";
+import ThesaurusSearchScreen from "./screens/ThesaurusSearchScreen";
 import { stores } from "./stores/RootStore";
 import { CleanupContainer } from "./utils/cleanup";
 import * as Errors from "./utils/errors";
@@ -62,10 +63,18 @@ class Main extends React.Component<any, AppState> {
           }}
         >
           <BottomTabNavigator.Screen
-            name={Stacks.SEARCH}
-            component={SearchStack}
+            name={Stacks.SEARCH_THESAURUS}
+            component={ThesaurusStack}
             options={{
-              tabBarLabel: "Iskanje",
+              tabBarLabel: "Sopomenke",
+              tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
+            }}
+          />
+          <BottomTabNavigator.Screen
+            name={Stacks.SEARCH_COLLOCATIONS}
+            component={CollocationsStack}
+            options={{
+              tabBarLabel: "Kolokacije",
               tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
             }}
           />
@@ -93,12 +102,21 @@ class Main extends React.Component<any, AppState> {
 
 const BottomTabNavigator = createBottomTabNavigator();
 
-const SearchStackNavigator = createStackNavigator();
-function SearchStack(props: {}) {
+const ThesaurusStackNavigator = createStackNavigator();
+function ThesaurusStack(props: {}) {
   return (
-    <SearchStackNavigator.Navigator headerMode="none">
-      <SearchStackNavigator.Screen name={Routes.SEARCH} component={SearchScreen} />
-    </SearchStackNavigator.Navigator>
+    <ThesaurusStackNavigator.Navigator headerMode="none">
+      <ThesaurusStackNavigator.Screen name={Routes.SEARCH_THESAURUS} component={ThesaurusSearchScreen} />
+    </ThesaurusStackNavigator.Navigator>
+  );
+}
+
+const CollocationsStackNavigator = createStackNavigator();
+function CollocationsStack(props: {}) {
+  return (
+    <CollocationsStackNavigator.Navigator headerMode="none">
+      <CollocationsStackNavigator.Screen name={Routes.SEARCH_COLLOCATIONS} component={CollocationsSearchScreen} />
+    </CollocationsStackNavigator.Navigator>
   );
 }
 

@@ -7,17 +7,17 @@ import { CleanupContainer } from "../utils/cleanup";
 import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 
-class SearchScreenState {
+class State {
   searchString: string = "";
 }
 
 // FIXME: Rename this
-export default class SearchScreen extends React.Component<ScreenProps, SearchScreenState> {
+export default class CollocationsSearchScreen extends React.Component<ScreenProps, State> {
   cleanup = new CleanupContainer();
 
   constructor(props: ScreenProps) {
     super(props);
-    this.state = new SearchScreenState();
+    this.state = new State();
     this.props.navigation.addListener("focus", this.willFocus);
     this.props.navigation.addListener("blur", this.didBlur);
     Utils.bindAllPrefixedMethods(this);
@@ -36,8 +36,8 @@ export default class SearchScreen extends React.Component<ScreenProps, SearchScr
 
   render() {
     return (
-      <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
-        <SearchScreenView searchString={this.state.searchString} />
+      <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje kolokacij">
+        <SearchScreenView searchString={this.state.searchString} type="collocations" />
       </AppScreenView>
     );
   }

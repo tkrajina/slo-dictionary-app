@@ -1,7 +1,7 @@
 import { default as React } from "react";
 import { ActivityIndicator, Image, ScrollView, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { BASELINE_CANCEL_24PX, BASELINE_SEARCH_24PX } from "../images_generated";
-import { ThesaurusEntry } from "../models/models";
+import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { stores } from "../stores/RootStore";
 import { LAYOUT_STYLES } from "../styles/styles";
 import { CleanupContainer } from "../utils/cleanup";
@@ -13,12 +13,13 @@ const LIMIT = 100;
 
 interface Props {
   searchString: string;
+  type: "thesaurus" | "collocations";
 }
 
 class State {
   searchString: string = "";
   searching = false;
-  results: ThesaurusEntry[] = [];
+  results: AbstractWord[] = [];
 }
 
 export default abstract class SearchScreenView extends React.Component<Props, State> {
@@ -29,6 +30,17 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     super(props);
     this.state = new State();
     Utils.bindAllPrefixedMethods(this);
+  }
+
+  getModelClass() {
+    switch (this.props.type) {
+      case "collocations":
+        return CollocationEntry;
+      case "thesaurus":
+        return ThesaurusEntry;       
+      default:
+        return ThesaurusEntry; // TODO: Error
+    }
   }
 
   componentDidMount() {
@@ -43,14 +55,14 @@ export default abstract class SearchScreenView extends React.Component<Props, St
 
   async searchAsync(text: string) {
     text = text.trim().toLowerCase();
-    let results: ThesaurusEntry[];
+    let results: AbstractWord[];
     if (!text) {
       results = [];
     } else if (text.startsWith("=")) {
-      results = await stores.dao.query(ThesaurusEntry, `where word = ? limit ${LIMIT}`, [text.replace("=", "").trim()]);
+      results = await stores.dao.query(this.getModelClass(), `where word = ? limit ${LIMIT}`, [text.replace("=", "").trim()]);
     } else {
       // Using > is much faster than "like 'text%'":
-      results = await stores.dao.query(ThesaurusEntry, `where search_str >= ? limit ${LIMIT}`, [text]);
+      results = await stores.dao.query(this.getModelClass(), `where search_str >= ? limit ${LIMIT}`, [text]);
       results = results.filter(w => w.word.trim().toLowerCase().startsWith(text));
     }
     this.setState({

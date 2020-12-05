@@ -53,7 +53,7 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
   }
 
   callbackOnClick(w: string) {
-    navigate(this.props.navigation, Stacks.SEARCH, Routes.SEARCH, { [Params.SEARCH_STRING]: `=${w}` });
+    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, { [Params.SEARCH_STRING]: `=${w}` });
   }
 
   render() {
