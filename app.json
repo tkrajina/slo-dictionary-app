@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Slo sopomenke",
+    "slug": "slo-sopomenke",
+    "version": "0.0.3",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#b9cffb"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "hr.scio.slo",
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/icon_app_1024x1024.png"
+      },
+      "permissions": [
+      ],
+      "versionCode": 3
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

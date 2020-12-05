@@ -1,0 +1,3 @@
+# slo-dictionary-app
+
+TODO
