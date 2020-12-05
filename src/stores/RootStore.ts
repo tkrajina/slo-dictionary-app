@@ -1,6 +1,6 @@
 import { Asset } from "expo-asset";
 import * as FileSystem from "expo-file-system";
-import { Platform } from "react-native";
+import { Keyboard, Platform } from "react-native";
 import { CollocationEntry, ThesaurusEntry } from "../models/models";
 import { Observable } from "../utils/observable";
 import { Dao } from "../utils/dao";
@@ -26,6 +26,7 @@ const storeInstances: { [dbFile: string]: any } = {};
 
 export class RootStore {
   public ready = new Observable<boolean>(false);
+  public keyboardHeight = new Observable<number>(0);
 
   public readonly app: ApplicationStore = new ApplicationStore(this);
   public dao: Dao;
@@ -36,6 +37,19 @@ export class RootStore {
     }
     storeInstances[databaseFile] = this;
     this.dao = {} as Dao; // tmp
+
+    Keyboard.addListener("keyboardWillShow", e => {
+      this.keyboardHeight.setIfChanged(e.endCoordinates.height);
+    });
+    Keyboard.addListener("keyboardDidShow", e => {
+      this.keyboardHeight.setIfChanged(e.endCoordinates.height);
+    });
+    Keyboard.addListener("keyboardWillHide", _e => {
+      this.keyboardHeight.setIfChanged(0);
+    });
+    Keyboard.addListener("keyboardDidHide", _e => {
+      this.keyboardHeight.setIfChanged(0);
+    });
 
     setImmediate(async () => {
       try {

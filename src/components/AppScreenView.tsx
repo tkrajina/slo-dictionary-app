@@ -1,8 +1,9 @@
 import { default as React } from "react";
-import { Image, StatusBar, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Image, Platform, StatusBar, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { NavigationScreenProp, SafeAreaView } from "react-navigation";
 import { SLO } from "../images_generated";
 import { Routes } from "../routes";
+import { stores } from "../stores/RootStore";
 import { CleanupContainer } from "../utils/cleanup";
 import * as Utils from "../utils/utils";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -13,7 +14,9 @@ interface AppScreenViewProps {
   withDefaultPadding?: boolean;
   navigation: NavigationScreenProp<any, any>;
 }
-class AppScreenViewState {}
+class AppScreenViewState {
+  keyboardHeight = stores.keyboardHeight;
+}
 
 export class AppScreenView extends React.Component<AppScreenViewProps, AppScreenViewState> {
   cleanup = new CleanupContainer();
@@ -52,7 +55,7 @@ export class AppScreenView extends React.Component<AppScreenViewProps, AppScreen
 
   render() {
     return (
-      <SafeAreaView style={[styles.safeAreaView, { backgroundColor: "#b9cffb" }]}>
+      <SafeAreaView style={[styles.safeAreaView, { backgroundColor: "#b9cffb", paddingBottom: Platform.OS === "ios" ? this.state.keyboardHeight.get() : 0 }]}>
         <View style={{ height: StatusBar.currentHeight ? StatusBar.currentHeight : undefined }} />
         <View style={[{ height: 40, paddingHorizontal: 10, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#999", backgroundColor: "#b9cffb" }]}>
           <Image style={{ alignSelf: "center", opacity: 0.5, width: 50, height: 50, resizeMode: "contain" }} source={SLO} />
