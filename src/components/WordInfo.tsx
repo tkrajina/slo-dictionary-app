@@ -58,10 +58,9 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
       <React.Fragment>
         {wordsGroup.map((g1) => (
           <React.Fragment>
-            {g1.map(g2 => <React.Fragment>
-              {g2.map(word => this.renderWord(word))}
-</React.Fragment>
-              )}
+            {g1.map((g2) => (
+              <React.Fragment>{g2.map((word) => this.renderWord(word))}</React.Fragment>
+            ))}
             {g1.length > 0 && <HorizontalLine color="#ddd" />}
           </React.Fragment>
         ))}
@@ -82,8 +81,8 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
           <View style={{ flex: 1, padding: 2 }}>
             <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
           </View>
-          <View style={{width: 30}}>
-            <Image source={LINK_24PX} style={{opacity: 0.25}} />
+          <View style={{ width: 30 }}>
+            <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
           </View>
         </View>
       </TouchableOpacity>

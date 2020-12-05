@@ -26,7 +26,7 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
   willFocus = async () => {
     const searchString = getParam(this.props.route, Params.SEARCH_STRING);
     if (searchString) {
-      this.setState({searchString: searchString});
+      this.setState({ searchString: searchString });
     }
   };
 

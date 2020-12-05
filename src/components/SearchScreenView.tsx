@@ -23,7 +23,6 @@ class State {
 }
 
 export default abstract class SearchScreenView extends React.Component<Props, State> {
-
   cleanup = new CleanupContainer();
 
   constructor(props: Props) {
@@ -37,7 +36,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
       case "collocations":
         return CollocationEntry;
       case "thesaurus":
-        return ThesaurusEntry;       
+        return ThesaurusEntry;
       default:
         return ThesaurusEntry; // TODO: Error
     }
@@ -63,7 +62,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     } else {
       // Using > is much faster than "like 'text%'":
       results = await stores.dao.query(this.getModelClass(), `where search_str >= ? limit ${LIMIT}`, [text]);
-      results = results.filter(w => w.word.trim().toLowerCase().startsWith(text));
+      results = results.filter((w) => w.word.trim().toLowerCase().startsWith(text));
     }
     this.setState({
       results: results,

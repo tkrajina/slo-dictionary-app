@@ -38,16 +38,16 @@ export class RootStore {
     storeInstances[databaseFile] = this;
     this.dao = {} as Dao; // tmp
 
-    Keyboard.addListener("keyboardWillShow", e => {
+    Keyboard.addListener("keyboardWillShow", (e) => {
       this.keyboardHeight.setIfChanged(e.endCoordinates.height);
     });
-    Keyboard.addListener("keyboardDidShow", e => {
+    Keyboard.addListener("keyboardDidShow", (e) => {
       this.keyboardHeight.setIfChanged(e.endCoordinates.height);
     });
-    Keyboard.addListener("keyboardWillHide", _e => {
+    Keyboard.addListener("keyboardWillHide", (_e) => {
       this.keyboardHeight.setIfChanged(0);
     });
-    Keyboard.addListener("keyboardDidHide", _e => {
+    Keyboard.addListener("keyboardDidHide", (_e) => {
       this.keyboardHeight.setIfChanged(0);
     });
 
@@ -79,10 +79,7 @@ export class RootStore {
   }
 
   private async initModels() {
-    await Promise.all([
-      this.dao.registerModelAsync(ThesaurusEntry),
-      this.dao.registerModelAsync(CollocationEntry)
-    ]);
+    await Promise.all([this.dao.registerModelAsync(ThesaurusEntry), this.dao.registerModelAsync(CollocationEntry)]);
   }
 }
 

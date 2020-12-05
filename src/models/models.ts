@@ -38,9 +38,7 @@ export abstract class AbstractWord extends Model<number> {
   }
 }
 
-
 export class ThesaurusEntry extends AbstractWord {
-
   constructor() {
     super();
   }
@@ -51,7 +49,6 @@ export class ThesaurusEntry extends AbstractWord {
 }
 
 export class CollocationEntry extends AbstractWord {
-
   constructor() {
     super();
   }

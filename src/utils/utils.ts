@@ -1,4 +1,3 @@
-
 export function bindAllPrefixedMethods(that: any, prefix: string = "callback") {
   if (__DEV__) {
     const key = "__bound__" + prefix;

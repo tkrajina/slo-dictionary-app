@@ -26,7 +26,7 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   willFocus = async () => {
     const searchString = getParam(this.props.route, Params.SEARCH_STRING);
     if (searchString) {
-      this.setState({searchString: searchString});
+      this.setState({ searchString: searchString });
     }
   };
 
