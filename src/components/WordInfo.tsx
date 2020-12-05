@@ -53,6 +53,7 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
     if (this.props.word instanceof ThesaurusEntry) {
       return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnClickWord} />;
     } else if (this.props.word instanceof CollocationEntry) {
+      return <LongCollocation info={this.infoAsCollocation()} />;
     }
     return <Text>Unknown: {JSON.stringify(this.props.word.info())}</Text>;
   }
@@ -62,7 +63,7 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
   }
 
   infoAsCollocation() {
-    return this.props.word.info() as any;
+    return this.props.word.info() as [number, string][][];
   }
 
   renderShort() {
@@ -85,6 +86,7 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
     if (this.props.word instanceof ThesaurusEntry) {
       return <ShortThesaurus info={this.infoAsThesaurus()} />;
     } else if (this.props.word instanceof CollocationEntry) {
+      return <ShortCollocation info={this.infoAsCollocation()} />;
     }
     return <Text>Unknown: {JSON.stringify(this.props.word.info())}</Text>;
   }
@@ -151,7 +153,7 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
 
   renderWord(word: [number, string]) {
     const score = Math.max(0, Math.min(0.99, word[0] / 0.4));
-    const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"];
+    const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
       <TouchableOpacity onPress={() => this.props.callbackOnClickWord(word[1])}>
@@ -197,6 +199,75 @@ class ShortThesaurus extends React.Component<ShortThesaurusProps> {
           <Text key={`${w}`}>{w}, </Text>
         ))}{" "}
         ...
+      </React.Fragment>
+    );
+  }
+}
+
+interface ShortCollocationProps {
+  info: [number, string][][];
+}
+class ShortCollocation extends React.Component<ShortCollocationProps> {
+  constructor(props: ShortCollocationProps) {
+    super(props);
+  }
+  render() {
+    const collocations: string[] = [];
+    for (const group of this.props.info) {
+      for (const group2 of group) {
+        if (collocations.length <= 2) {
+          collocations.push(group2[1]);
+        }
+      }
+    }
+    return (
+      <Text>
+        {collocations.map((c) => (
+          <Text>{c}, </Text>
+        ))}
+        ...
+      </Text>
+    );
+  }
+}
+
+interface LongCollocationProps {
+  info: [number, string][][];
+}
+class LongCollocation extends React.Component<LongCollocationProps> {
+  constructor(props: ShortCollocationProps) {
+    super(props);
+  }
+  render() {
+    if (!this.props.info) {
+      return null;
+    }
+    return (
+      <React.Fragment>
+        {this.props.info.map((g1) => (
+          <React.Fragment>
+            {g1.map((g2) => this.renderWord(g2))}
+            {g1.length > 0 && <HorizontalLine color="#ddd" />}
+          </React.Fragment>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  renderWord(word: [number, string]) {
+    const score = Math.max(0, Math.min(0.99, word[0] / 50));
+    const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
+    const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
+    return (
+      <React.Fragment>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: 60, paddingTop: 8 }}>
+            <Progress width={55} height={12} percentage={score} color={color} />
+          </View>
+          <View style={{ flex: 1, padding: 2 }}>
+            <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
+          </View>
+        </View>
       </React.Fragment>
     );
   }
