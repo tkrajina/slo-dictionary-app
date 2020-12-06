@@ -1,8 +1,11 @@
 import { default as React } from "react";
-import { Button, Image, Text, View } from "react-native";
+import { Alert, Button, Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { NavigationScreenProp } from "react-navigation";
 import { LINK_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
+import { navigate } from "../navigation";
+import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
 import * as Utils from "../utils/utils";
 import { HorizontalLine } from "./HorizontalLine";
@@ -12,7 +15,7 @@ interface WordInfoProps {
   word: AbstractWord;
   long: boolean;
   highlight?: string;
-  onClickWord: (word: string) => void;
+  navigation: NavigationScreenProp<any, any>;
 }
 class WordInfoState {
   thesaurusSearchWord: string = "";
@@ -43,9 +46,19 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
     }
   }
 
-  callbackOnClickWord(word: string) {
-    if (this.props.onClickWord) {
-      this.props.onClickWord(word);
+  callbackOnClickWord(word: string | AbstractWord) {
+    if ("string" === typeof word) {
+      if (this.props.word instanceof ThesaurusEntry) {
+        navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.SEARCH_STRING]: `=${word}`})
+      } else if (this.props.word instanceof CollocationEntry) {
+        navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.SEARCH_STRING]: `=${word}`})
+      }
+    } else if (word instanceof ThesaurusEntry) {
+      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.SEARCH_STRING]: `=${word.word}`})
+    } else if (word instanceof CollocationEntry) {
+      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.SEARCH_STRING]: `=${word.word}`})
+    } else {
+      console.error(`Unknown word ${word}`)
     }
   }
 
@@ -70,8 +83,8 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={(w) => {}} />}
-          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={(w) => {}} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnClickWord} />}
+          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={this.callbackOnClickWord} />}
         </View>
       </React.Fragment>
     );

@@ -1,5 +1,6 @@
 import { default as React } from "react";
 import { ActivityIndicator, Image, ScrollView, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { NavigationScreenProp } from "react-navigation";
 import { BASELINE_CANCEL_24PX, BASELINE_SEARCH_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { stores } from "../stores/RootStore";
@@ -14,6 +15,7 @@ const LIMIT = 100;
 interface Props {
   searchString: string;
   type: "thesaurus" | "collocations";
+  navigation: NavigationScreenProp<any, any>;
 }
 
 class State {
@@ -89,10 +91,6 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     });
   }
 
-  callbackOnClick(w: string) {
-    this.callbackOnSearchStringAsync(`=${w}`);
-  }
-
   render() {
     return (
       <React.Fragment>
@@ -104,7 +102,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
               word={word}
               long={this.state.results.length == 1}
               highlight={this.state.searchString.replace("*", "")}
-              onClickWord={this.callbackOnClick.bind(this)}
+              navigation={this.props.navigation}
             />,
           ])}
         </ScrollView>

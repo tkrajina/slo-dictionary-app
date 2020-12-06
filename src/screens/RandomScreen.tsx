@@ -57,10 +57,6 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
     });
   }
 
-  callbackOnClick(w: string) {
-    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, { [Params.SEARCH_STRING]: `=${w}` });
-  }
-
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Naključna beseda">
@@ -68,7 +64,7 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
           <View style={{ flex: 1 }}>
             <ScrollView>
               {!this.state.word && <ActivityIndicator />}
-              {this.state.word && <WordInfo key={`${this.state.word?.tableName()} ${this.state.word?.word}`} word={this.state.word} long={true} onClickWord={this.callbackOnClick} />}
+              {this.state.word && <WordInfo key={`${this.state.word?.tableName()} ${this.state.word?.word}`} word={this.state.word} long={true} navigation={this.props.navigation} />}
             </ScrollView>
           </View>
           <View style={{ height: 80 }}>
