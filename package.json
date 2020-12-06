@@ -23,7 +23,7 @@
     "react-native-root-toast": "^3.2.1",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
-    "react-navigation": "^4.4.2",
+    "react-navigation": "^4.4.3",
     "expo-device": "~2.3.0"
   },
   "devDependencies": {
