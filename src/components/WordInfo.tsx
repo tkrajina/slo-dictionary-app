@@ -255,7 +255,7 @@ class LongCollocation extends React.Component<LongCollocationProps> {
   }
 
   renderWord(word: [number, string]) {
-    const score = Math.max(0, Math.min(0.99, word[0] / 50));
+    const score = Math.max(0, Math.min(0.99, word[0] / 150));
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
