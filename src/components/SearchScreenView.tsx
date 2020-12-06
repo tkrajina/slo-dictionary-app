@@ -99,7 +99,13 @@ export default abstract class SearchScreenView extends React.Component<Props, St
         <ScrollView>
           {this.state.results.map((word, index) => [
             index > 0 ? <HorizontalLine key={"h" + index} color="#ddd" /> : undefined,
-            <WordInfo key={word.id} word={word} long={this.state.results.length == 1} highlight={this.state.searchString.replace("*", "")} onClickWord={this.callbackOnClick.bind(this)} />,
+            <WordInfo
+              key={`${this.props.type} ${word.id} ${this.state.results.length == 1}`}
+              word={word}
+              long={this.state.results.length == 1}
+              highlight={this.state.searchString.replace("*", "")}
+              onClickWord={this.callbackOnClick.bind(this)}
+            />,
           ])}
         </ScrollView>
         <View style={[LAYOUT_STYLES.directionRow, { borderWidth: 1, borderColor: "#ddd", height: 50, borderRadius: 10 }]}>

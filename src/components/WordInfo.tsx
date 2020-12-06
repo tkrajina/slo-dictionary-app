@@ -1,8 +1,9 @@
 import { default as React } from "react";
-import { Image, Text, View } from "react-native";
+import { Button, Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LINK_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
+import { stores } from "../stores/RootStore";
 import * as Utils from "../utils/utils";
 import { HorizontalLine } from "./HorizontalLine";
 import { Progress } from "./Progress";
@@ -13,11 +14,33 @@ interface WordInfoProps {
   highlight?: string;
   onClickWord: (word: string) => void;
 }
-//class WordInfoState {}
-export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoState*/> {
+class WordInfoState {
+  thesaurusSearchWord: string = "";
+  collocationsSearchWord: string = "";
+}
+export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
   constructor(props: WordInfoProps) {
     super(props);
+    this.state = new WordInfoState();
     Utils.bindAllPrefixedMethods(this);
+  }
+
+  async componentDidMount() {
+    if (this.props.long) {
+      const searchStr = this.props.word.word.toLowerCase();
+      if (!(this.props.word instanceof ThesaurusEntry)) {
+        const count = await stores.dao.countAsync(ThesaurusEntry, "where search_str=?", [searchStr]);
+        if (count > 0) {
+          this.setState({ thesaurusSearchWord: searchStr });
+        }
+      }
+      if (!(this.props.word instanceof CollocationEntry)) {
+        const count = await stores.dao.countAsync(CollocationEntry, "where search_str=?", [searchStr]);
+        if (count > 0) {
+          this.setState({ collocationsSearchWord: searchStr });
+        }
+      }
+    }
   }
 
   callbackOnClickWord(word: string) {
@@ -42,11 +65,13 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
         </View>
         <View style={{ marginTop: 5 }}>
           <Text style={{ color: "#888", fontSize: 10 }}>
-            {this.props.word instanceof ThesaurusEntry && "Sopomenke:"}
-            {this.props.word instanceof CollocationEntry && "Kolokacije:"}
+            {this.props.word instanceof ThesaurusEntry ? "Sopomenke:" : ""}
+            {this.props.word instanceof CollocationEntry ? "Kolokacije:" : ""}
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
+          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={(w) => {}} />}
+          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={(w) => {}} />}
         </View>
       </React.Fragment>
     );
@@ -247,8 +272,8 @@ class LongCollocation extends React.Component<LongCollocationProps> {
     }
     return (
       <React.Fragment>
-        {this.props.info.map((g1) => (
-          <React.Fragment>
+        {this.props.info.map((g1, n) => (
+          <React.Fragment key={n}>
             {g1.map((g2) => this.renderWord(g2))}
             {g1.length > 0 && <HorizontalLine color="#ddd" />}
           </React.Fragment>
@@ -262,7 +287,7 @@ class LongCollocation extends React.Component<LongCollocationProps> {
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
-      <React.Fragment>
+      <React.Fragment key={word[1]}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: 60, paddingTop: 8 }}>
             <Progress width={55} height={12} percentage={score} color={color} />
@@ -272,6 +297,31 @@ class LongCollocation extends React.Component<LongCollocationProps> {
           </View>
         </View>
       </React.Fragment>
+    );
+  }
+}
+
+interface LinkProps {
+  text: string;
+  word: AbstractWord;
+  onClick: (w: AbstractWord) => void;
+}
+class Link extends React.Component<LinkProps> {
+  constructor(props: LinkProps) {
+    super(props);
+  }
+  render() {
+    return (
+      <TouchableOpacity onPress={() => this.props.onClick(this.props.word)}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 1 }}>
+            <Text>{this.props.text}</Text>
+          </View>
+          <View style={{ width: 30 }}>
+            <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
+          </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }

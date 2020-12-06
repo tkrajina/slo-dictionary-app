@@ -68,7 +68,7 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
           <View style={{ flex: 1 }}>
             <ScrollView>
               {!this.state.word && <ActivityIndicator />}
-              {this.state.word && <WordInfo word={this.state.word} long={true} onClickWord={this.callbackOnClick} />}
+              {this.state.word && <WordInfo key={`${this.state.word?.tableName()} ${this.state.word?.word}`} word={this.state.word} long={true} onClickWord={this.callbackOnClick} />}
             </ScrollView>
           </View>
           <View style={{ height: 80 }}>
