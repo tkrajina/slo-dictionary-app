@@ -11,7 +11,6 @@ class SearchScreenState {
   searchString: string = "";
 }
 
-// FIXME: Rename this
 export default class ThesaurusSearchScreen extends React.Component<ScreenProps, SearchScreenState> {
   cleanup = new CleanupContainer();
 

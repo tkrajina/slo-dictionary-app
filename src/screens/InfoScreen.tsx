@@ -5,41 +5,11 @@ import { CleanupContainer } from "../utils/cleanup";
 import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 
-const README = `# Title
-
-## Subtitle
-
-### Subsubtitle
-
-> Quote without formattings (for now)
-> Second line
-
-normal *italic* **bold *italic*** fdjskl.
-
-horizontal line:
-
----
-
-* List item #1
-* List item #2
-* List item #3
-
-This is an [example link](http://example.com/). Or <http://example.com/>. Or just http://example.com/ .
-`;
-
-class InfoScreenState {} // FIXME: Rename this
-
-// FIXME: Rename this
-export default class InfoScreen extends React.Component<ScreenProps, InfoScreenState> {
-  static navigationOptions = {
-    title: "Info",
-  };
-
+export default class InfoScreen extends React.Component<ScreenProps> {
   cleanup = new CleanupContainer();
 
   constructor(props: ScreenProps) {
     super(props);
-    this.state = new InfoScreenState();
     this.props.navigation.addListener("focus", this.willFocus);
     this.props.navigation.addListener("blur", this.didBlur);
     Utils.bindAllPrefixedMethods(this);

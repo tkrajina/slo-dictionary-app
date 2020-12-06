@@ -16,7 +16,6 @@ class State {
   word: AbstractWord | undefined;
 }
 
-// FIXME: Rename this
 export default class RandomScreen extends React.Component<ScreenProps, State> {
   cleanup = new CleanupContainer();
 

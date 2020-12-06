@@ -1,4 +1,5 @@
 import { default as React } from "react";
+import { Alert } from "react-native";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
 import { getParam } from "../navigation";
@@ -11,7 +12,6 @@ class State {
   searchString: string = "";
 }
 
-// FIXME: Rename this
 export default class CollocationsSearchScreen extends React.Component<ScreenProps, State> {
   cleanup = new CleanupContainer();
 
