@@ -41,7 +41,10 @@ export class WordInfo extends React.PureComponent<WordInfoProps /*, WordInfoStat
           <Text style={{ fontSize: 40, paddingLeft: 20 }}>{this.renderWithHighlight(this.props.word.word)}</Text>
         </View>
         <View style={{ marginTop: 5 }}>
-          <Text style={{ color: "#888", fontSize: 10 }}>Sopomenke:</Text>
+          <Text style={{ color: "#888", fontSize: 10 }}>
+            {this.props.word instanceof ThesaurusEntry && "Sopomenke:"}
+            {this.props.word instanceof CollocationEntry && "Kolokacije:"}
+          </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
         </View>
