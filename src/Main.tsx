@@ -53,7 +53,20 @@ class Main extends React.Component<any, AppState> {
 
     return (
       <NavigationContainer>
-        <BottomTabNavigator.Navigator
+        <MainStackNavigator.Navigator headerMode="none">
+          <MainStackNavigator.Screen name="root" component={BottomTabs} initialParams={{}} />
+        </MainStackNavigator.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
+
+const MainStackNavigator = createStackNavigator();
+
+const BottomTabNavigator = createBottomTabNavigator();
+
+function BottomTabs(props: {}) {
+    return <BottomTabNavigator.Navigator
           tabBarOptions={{
             inactiveTintColor: "#bbb",
             activeTintColor: "black",
@@ -95,12 +108,7 @@ class Main extends React.Component<any, AppState> {
             }}
           />
         </BottomTabNavigator.Navigator>
-      </NavigationContainer>
-    );
-  }
 }
-
-const BottomTabNavigator = createBottomTabNavigator();
 
 const ThesaurusStackNavigator = createStackNavigator();
 function ThesaurusStack(props: {}) {

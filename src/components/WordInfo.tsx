@@ -1,7 +1,7 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
-import { Alert, Button, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { NavigationScreenProp } from "react-navigation";
 import { LINK_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { navigate } from "../navigation";
@@ -15,7 +15,7 @@ interface WordInfoProps {
   word: AbstractWord;
   long: boolean;
   highlight?: string;
-  navigation: NavigationScreenProp<any, any>;
+  navigation: StackNavigationProp<any, any>;
 }
 class WordInfoState {
   thesaurusSearchWord: string = "";

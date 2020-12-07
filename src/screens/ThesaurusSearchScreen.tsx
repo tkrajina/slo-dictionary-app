@@ -36,7 +36,7 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
-        <SearchScreenView searchString={this.state.searchString} type="thesaurus" navigation={this.props.navigation} />
+        <SearchScreenView key={this.state.searchString} searchString={this.state.searchString} type="thesaurus" navigation={this.props.navigation} />
       </AppScreenView>
     );
   }

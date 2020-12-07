@@ -1,6 +1,6 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
-import { ActivityIndicator, Image, ScrollView, TextInput, TouchableWithoutFeedback, View } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import { ActivityIndicator, Image, ScrollView, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { BASELINE_CANCEL_24PX, BASELINE_SEARCH_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { stores } from "../stores/RootStore";
@@ -15,11 +15,11 @@ const LIMIT = 100;
 interface Props {
   searchString: string;
   type: "thesaurus" | "collocations";
-  navigation: NavigationScreenProp<any, any>;
+  navigation: StackNavigationProp<any, any>;
 }
 
 class State {
-  searchString: string = "";
+  searchString: string | undefined;
   searching = false;
   results: AbstractWord[] = [];
 }
@@ -46,7 +46,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
 
   componentDidMount() {
     if (this.props.searchString) {
-      this.callbackOnSearchStringAsync(this.props.searchString);
+      this.callbackOnSearchStringAsync(this.state.searchString === undefined ? this.props.searchString : this.state.searchString);
     }
   }
 
@@ -101,7 +101,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
               key={`${this.props.type} ${word.id} ${this.state.results.length == 1}`}
               word={word}
               long={this.state.results.length == 1}
-              highlight={this.state.searchString.replace("*", "")}
+              highlight={(this.state.searchString || "").replace("*", "")}
               navigation={this.props.navigation}
             />,
           ])}

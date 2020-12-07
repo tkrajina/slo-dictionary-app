@@ -1,6 +1,7 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
 import { Image, Platform, StatusBar, StyleSheet, Text, View, ViewStyle } from "react-native";
-import { NavigationScreenProp, SafeAreaView } from "react-navigation";
+import { SafeAreaView } from "react-navigation";
 import { SLO } from "../images_generated";
 import { Routes } from "../routes";
 import { stores } from "../stores/RootStore";
@@ -12,7 +13,7 @@ interface AppScreenViewProps {
   title: string;
   content?: "scrollview" | "center";
   withDefaultPadding?: boolean;
-  navigation: NavigationScreenProp<any, any>;
+  navigation: StackNavigationProp<any, any>;
 }
 class AppScreenViewState {
   keyboardHeight = stores.keyboardHeight;
