@@ -15,7 +15,7 @@ export enum Stacks {
 }
 
 export enum Params {
-  SEARCH_STRING = "SEARCH_STRING",
+  WORD = "WORD",
 }
 
 export enum Params {}

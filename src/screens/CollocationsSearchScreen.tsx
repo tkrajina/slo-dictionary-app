@@ -1,7 +1,7 @@
 import { default as React } from "react";
-import { Alert } from "react-native";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
+import { AbstractWord } from "../models/models";
 import { getParam } from "../navigation";
 import { Params } from "../routes";
 import { CleanupContainer } from "../utils/cleanup";
@@ -9,7 +9,7 @@ import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 
 class State {
-  searchString: string = "";
+  initialWord: AbstractWord | undefined;
 }
 
 export default class CollocationsSearchScreen extends React.Component<ScreenProps, State> {
@@ -24,9 +24,11 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
   }
 
   willFocus = async () => {
-    const searchString = getParam(this.props.route, Params.SEARCH_STRING);
-    if (searchString) {
-      this.setState({ searchString: searchString });
+    const word = getParam(this.props.route, Params.WORD);
+    if (word) {
+      this.setState({
+        initialWord: word
+      });
     }
   };
 
@@ -37,7 +39,7 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje kolokacij">
-        <SearchScreenView searchString={this.state.searchString} type="collocations" navigation={this.props.navigation} />
+        <SearchScreenView key={this.state.initialWord?.id} word={this.state.initialWord} type="collocations" navigation={this.props.navigation} />
       </AppScreenView>
     );
   }

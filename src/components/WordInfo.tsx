@@ -18,8 +18,8 @@ interface WordInfoProps {
   navigation: StackNavigationProp<any, any>;
 }
 class WordInfoState {
-  thesaurusSearchWord: string = "";
-  collocationsSearchWord: string = "";
+  thesaurusSearchWord: ThesaurusEntry | undefined;
+  collocationsSearchWord: CollocationEntry | undefined;
 }
 export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
   constructor(props: WordInfoProps) {
@@ -32,31 +32,33 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
     if (this.props.long) {
       const searchStr = this.props.word.word.toLowerCase();
       if (!(this.props.word instanceof ThesaurusEntry)) {
-        const count = await stores.dao.countAsync(ThesaurusEntry, "where search_str=?", [searchStr]);
-        if (count > 0) {
-          this.setState({ thesaurusSearchWord: searchStr });
+        const words = await stores.dao.query(ThesaurusEntry, "where search_str=? limit 1", [searchStr]);
+        if (words && words.length > 0) {
+          this.setState({ thesaurusSearchWord: words[0] });
         }
       }
       if (!(this.props.word instanceof CollocationEntry)) {
-        const count = await stores.dao.countAsync(CollocationEntry, "where search_str=?", [searchStr]);
-        if (count > 0) {
-          this.setState({ collocationsSearchWord: searchStr });
+        const words = await stores.dao.query(CollocationEntry, "where search_str=? limit 1", [searchStr]);
+        if (words && words.length > 0) {
+          this.setState({ collocationsSearchWord: words[0] });
         }
       }
     }
   }
 
-  callbackOnClickWord(word: string | AbstractWord) {
-    if ("string" === typeof word) {
-      if (this.props.word instanceof ThesaurusEntry) {
-        navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.SEARCH_STRING]: `=${word}`})
-      } else if (this.props.word instanceof CollocationEntry) {
-        navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.SEARCH_STRING]: `=${word}`})
-      }
-    } else if (word instanceof ThesaurusEntry) {
-      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.SEARCH_STRING]: `=${word.word}`})
+  callbackOnSearchThesaurus() {
+      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: this.state.thesaurusSearchWord})
+  }
+
+  callbackOnSearchCollocations() {
+      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: this.state.collocationsSearchWord})
+  }
+
+  callbackOnClickWord(word: AbstractWord) {
+    if (word instanceof ThesaurusEntry) {
+      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: word})
     } else if (word instanceof CollocationEntry) {
-      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.SEARCH_STRING]: `=${word.word}`})
+      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: word})
     } else {
       console.error(`Unknown word ${word}`)
     }
@@ -83,8 +85,8 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnClickWord} />}
-          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={this.callbackOnClickWord} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnSearchThesaurus} />}
+          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={this.callbackOnSearchCollocations} />}
         </View>
       </React.Fragment>
     );
@@ -92,7 +94,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   renderLongWords() {
     if (this.props.word instanceof ThesaurusEntry) {
-      return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnClickWord} />;
+      return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnSearchThesaurus} />;
     } else if (this.props.word instanceof CollocationEntry) {
       return <LongCollocation info={this.infoAsCollocation()} />;
     }
@@ -109,7 +111,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   renderShort() {
     return (
-      <TouchableOpacity onPress={() => this.callbackOnClickWord(this.props.word.word)}>
+      <TouchableOpacity onPress={() => this.callbackOnClickWord(this.props.word)}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 20 }}>{this.renderWithHighlight(this.props.word.word)}:</Text>

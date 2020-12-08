@@ -13,7 +13,7 @@ import { WordInfo } from "./WordInfo";
 const LIMIT = 100;
 
 interface Props {
-  searchString: string;
+  word?: AbstractWord;
   type: "thesaurus" | "collocations";
   navigation: StackNavigationProp<any, any>;
 }
@@ -33,6 +33,15 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     Utils.bindAllPrefixedMethods(this);
   }
 
+  static getDerivedStateFromProps(nextProps: Props, prevState: State): State | null {
+    if (nextProps.word && prevState.results.length == 0) {
+      prevState.results.push(nextProps.word);
+      prevState.searchString = `=${nextProps.word.searchString}`
+      return prevState;
+    }
+    return null;
+  }
+
   getModelClass() {
     switch (this.props.type) {
       case "collocations":
@@ -41,12 +50,6 @@ export default abstract class SearchScreenView extends React.Component<Props, St
         return ThesaurusEntry;
       default:
         return ThesaurusEntry; // TODO: Error
-    }
-  }
-
-  componentDidMount() {
-    if (this.props.searchString) {
-      this.callbackOnSearchStringAsync(this.state.searchString === undefined ? this.props.searchString : this.state.searchString);
     }
   }
 

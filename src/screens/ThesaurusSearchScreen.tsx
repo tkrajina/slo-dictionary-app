@@ -1,6 +1,7 @@
 import { default as React } from "react";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
+import { AbstractWord } from "../models/models";
 import { getParam } from "../navigation";
 import { Params } from "../routes";
 import { CleanupContainer } from "../utils/cleanup";
@@ -8,7 +9,7 @@ import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 
 class SearchScreenState {
-  searchString: string = "";
+  initialWord: AbstractWord | undefined;
 }
 
 export default class ThesaurusSearchScreen extends React.Component<ScreenProps, SearchScreenState> {
@@ -23,9 +24,9 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   }
 
   willFocus = async () => {
-    const searchString = getParam(this.props.route, Params.SEARCH_STRING);
-    if (searchString) {
-      this.setState({ searchString: searchString });
+    const word = getParam(this.props.route, Params.WORD);
+    if (word) {
+      this.setState({ initialWord: word });
     }
   };
 
@@ -36,7 +37,7 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
-        <SearchScreenView key={this.state.searchString} searchString={this.state.searchString} type="thesaurus" navigation={this.props.navigation} />
+        <SearchScreenView key={this.state.initialWord?.id} word={this.state.initialWord} type="thesaurus" navigation={this.props.navigation} />
       </AppScreenView>
     );
   }
