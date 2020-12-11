@@ -1,4 +1,5 @@
 import { default as React } from "react";
+import { Text } from "react-native";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
 import { AbstractWord } from "../models/models";
@@ -37,7 +38,8 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
-        <SearchScreenView key={this.state.initialWord?.id} word={this.state.initialWord} type="thesaurus" navigation={this.props.navigation} />
+        <Text>{JSON.stringify(this.state.initialWord)}</Text>
+        <SearchScreenView key={`thesaurus/${this.state.initialWord?.id}`} word={this.state.initialWord} type="thesaurus" navigation={this.props.navigation} />
       </AppScreenView>
     );
   }

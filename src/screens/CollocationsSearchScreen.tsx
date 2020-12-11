@@ -39,7 +39,7 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje kolokacij">
-        <SearchScreenView key={this.state.initialWord?.id} word={this.state.initialWord} type="collocations" navigation={this.props.navigation} />
+        <SearchScreenView key={`collocations/${this.state.initialWord?.id}`} word={this.state.initialWord} type="collocations" navigation={this.props.navigation} />
       </AppScreenView>
     );
   }
