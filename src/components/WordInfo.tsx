@@ -10,6 +10,7 @@ import { stores } from "../stores/RootStore";
 import * as Utils from "../utils/utils";
 import { HorizontalLine } from "./HorizontalLine";
 import { Progress } from "./Progress";
+import * as Toasts from "../utils/toasts";
 
 interface WordInfoProps {
   word: AbstractWord;
@@ -46,12 +47,21 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
     }
   }
 
-  callbackOnSearchThesaurus() {
-      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: this.state.thesaurusSearchWord})
+  async callbackOnGotoThesaurusByString(w: string) {
+    const words = await stores.dao.query(ThesaurusEntry, "where word=?", [w]);
+    if (words && words.length > 0) {
+      this.callbackOnGotoThesaurus(words[0]);
+    } else {
+      Toasts.warning("Not found");
+    }
   }
 
-  callbackOnSearchCollocations() {
-      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: this.state.collocationsSearchWord})
+  async callbackOnGotoThesaurus(w: ThesaurusEntry) {
+    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: w})
+  }
+
+  async callbackOnSearchCollocations(w: CollocationEntry) {
+    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: w})
   }
 
   callbackOnClickWord(word: AbstractWord) {
@@ -85,7 +95,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnSearchThesaurus} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnGotoThesaurus} />}
           {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={this.callbackOnSearchCollocations} />}
         </View>
       </React.Fragment>
@@ -94,7 +104,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   renderLongWords() {
     if (this.props.word instanceof ThesaurusEntry) {
-      return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnSearchThesaurus} />;
+      return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnGotoThesaurusByString} />;
     } else if (this.props.word instanceof CollocationEntry) {
       return <LongCollocation info={this.infoAsCollocation()} />;
     }
