@@ -87,8 +87,8 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text={`Sopomenke od "${this.state.thesaurusSearchWord.word}"`} onClick={this.callbackOnGotoWord} />}
-          {!!this.state.collocationsSearchWord && <Link word={this.state.collocationsSearchWord} text={`Kolokacije od "${this.state.collocationsSearchWord.word}"`} onClick={this.callbackOnGotoWord} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text="Sopomenke od" italicText={this.state.thesaurusSearchWord.word} onClick={this.callbackOnGotoWord} />}
+          {!!this.state.collocationsSearchWord && <Link word={this.state.collocationsSearchWord} text="Kolokacije od" italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />}
         </View>
       </React.Fragment>
     );
@@ -300,7 +300,7 @@ class LongCollocation extends React.Component<LongCollocationProps> {
   }
 
   renderWord(word: [number, string]) {
-    const score = Math.max(0, Math.min(0.99, word[0] / 150));
+    const score = Math.max(0, Math.min(0.99, word[0] / 100));
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
@@ -320,6 +320,7 @@ class LongCollocation extends React.Component<LongCollocationProps> {
 
 interface LinkProps {
   text: string;
+  italicText: string;
   word: AbstractWord;
   onClick: (w: AbstractWord) => void;
 }
@@ -332,7 +333,7 @@ class Link extends React.Component<LinkProps> {
       <TouchableOpacity onPress={() => this.props.onClick(this.props.word)}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <Text>{this.props.text}</Text>
+            <Text style={{color: "#005be5", fontSize: 18}}>{this.props.text} <Text style={{fontStyle: "italic", fontWeight: "bold"}}>{this.props.italicText}</Text></Text>
           </View>
           <View style={{ width: 30 }}>
             <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
