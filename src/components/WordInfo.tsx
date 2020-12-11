@@ -50,21 +50,13 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
   async callbackOnGotoThesaurusByString(w: string) {
     const words = await stores.dao.query(ThesaurusEntry, "where word=?", [w]);
     if (words && words.length > 0) {
-      this.callbackOnGotoThesaurus(words[0]);
+      this.callbackOnGotoWord(words[0]);
     } else {
       Toasts.warning("Not found");
     }
   }
 
-  async callbackOnGotoThesaurus(w: ThesaurusEntry) {
-    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: w})
-  }
-
-  async callbackOnSearchCollocations(w: CollocationEntry) {
-    navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: w})
-  }
-
-  callbackOnClickWord(word: AbstractWord) {
+  callbackOnGotoWord(word: AbstractWord) {
     if (word instanceof ThesaurusEntry) {
       navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: word})
     } else if (word instanceof CollocationEntry) {
@@ -95,8 +87,8 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.props.word} text={`Sopomenke od "${this.props.word?.word}"`} onClick={this.callbackOnGotoThesaurus} />}
-          {!!this.state.collocationsSearchWord && <Link word={this.props.word} text={`Kolokacije od "${this.props.word?.word}"`} onClick={this.callbackOnSearchCollocations} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text={`Sopomenke od "${this.state.thesaurusSearchWord.word}"`} onClick={this.callbackOnGotoWord} />}
+          {!!this.state.collocationsSearchWord && <Link word={this.state.collocationsSearchWord} text={`Kolokacije od "${this.state.collocationsSearchWord.word}"`} onClick={this.callbackOnGotoWord} />}
         </View>
       </React.Fragment>
     );
@@ -121,7 +113,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   renderShort() {
     return (
-      <TouchableOpacity onPress={() => this.callbackOnClickWord(this.props.word)}>
+      <TouchableOpacity onPress={() => this.callbackOnGotoWord(this.props.word)}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 20 }}>{this.renderWithHighlight(this.props.word.word)}:</Text>
