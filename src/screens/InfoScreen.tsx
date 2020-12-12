@@ -43,7 +43,7 @@ Thesaurus Authors: Simon Krek, Cyprian Laskowski, Marko Robnik Šikonja, Iztok K
 
 Collocations authors: Iztok Kosem, Polona Gantar, Simon Krek, Špela Arhar Holdt, Jaka Čibej, Cyprian Laskowski, Eva Pori, Bojan Klemenc, Kaja Dobrovoljc, Vojko Gorjanc, Nikola Ljubešić
 
-Read more about on <https://viri.cjvt.si/sopomenke/eng/about> and <https://viri.cjvt.si/kolokacije/slv/about>.
+Read more about on <https://viri.cjvt.si/sopomenke/eng/about> and <https://viri.cjvt.si/kolokacije/slv/about>
 
 # Mobile app
 
