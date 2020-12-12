@@ -30,21 +30,30 @@ export default class InfoScreen extends React.Component<ScreenProps> {
   }
 }
 
-const MARKDOWN = `# Thesaurus of modern Slovene language
+const MARKDOWN = `## Thesaurus of modern Slovene language
 
 This application is an unofficial offline viewer of the:
 
-* Thesaurus of modern Slovene language <https://viri.cjvt.si/sopomenke/>
-* Collocations Dictionary of Modern Slovene <https://viri.cjvt.si/kolokacije/slv/>
+* Thesaurus of modern Slovene language
+* Collocations Dictionary of Modern Slovene
+
+Available on https://viri.cjvt.si
+
+Thesaurus Authors: **Simon Krek, Cyprian Laskowski, Marko Robnik Šikonja, Iztok Kosem, Špela Arhar Holdt, Polona Gantar, Jaka Čibej, Vojko Gorjanc, Bojan Klemenc, Kaja Dobrovoljc**
+
+Collocations authors: **Iztok Kosem, Polona Gantar, Simon Krek, Špela Arhar Holdt, Jaka Čibej, Cyprian Laskowski, Eva Pori, Bojan Klemenc, Kaja Dobrovoljc, Vojko Gorjanc, Nikola Ljubešić**
 
 The data is published under Creative Commons Attribution-ShareAlike International 4.0.
 
-Thesaurus Authors: Simon Krek, Cyprian Laskowski, Marko Robnik Šikonja, Iztok Kosem, Špela Arhar Holdt, Polona Gantar, Jaka Čibej, Vojko Gorjanc, Bojan Klemenc, Kaja Dobrovoljc
+Read more about on:
 
-Collocations authors: Iztok Kosem, Polona Gantar, Simon Krek, Špela Arhar Holdt, Jaka Čibej, Cyprian Laskowski, Eva Pori, Bojan Klemenc, Kaja Dobrovoljc, Vojko Gorjanc, Nikola Ljubešić
+* https://viri.cjvt.si/sopomenke/eng/about
+* https://viri.cjvt.si/kolokacije/slv/about
 
-Read more about on <https://viri.cjvt.si/sopomenke/eng/about> and <https://viri.cjvt.si/kolokacije/slv/about>
+## Mobile app
 
-# Mobile app
+Programming: **Tomo Krajina** http://github.com/tkrajina
 
-Programming: Tomo Krajina (<http://github.com/tkrajina>)`;
+Source code: https://github.com/tkrajina/slo-dictionary-app
+
+This application is licensed under the **Apache License, Version 2.0**`;
