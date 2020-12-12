@@ -37,7 +37,7 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
-        <SearchScreenView key={`thesaurus/${this.state.initialWord?.id}`} word={this.state.initialWord} type="thesaurus" navigation={this.props.navigation} />
+        <SearchScreenView key={`thesaurus/${this.state.initialWord?.id}`} word={this.state.initialWord} type="thesaurus" navigation={this.props.navigation} emptyText="Sopomenka (sinonim) je beseda, ki ima skoraj enak pomen kot kaka druga beseda." />
       </AppScreenView>
     );
   }

@@ -7,13 +7,18 @@ import { stores } from "../stores/RootStore";
 import { LAYOUT_STYLES } from "../styles/styles";
 import { CleanupContainer } from "../utils/cleanup";
 import * as Utils from "../utils/utils";
+import { Center } from "./Center";
 import { HorizontalLine } from "./HorizontalLine";
 import { WordInfo } from "./WordInfo";
+import { Dimensions } from 'react-native';
 
 const LIMIT = 100;
 
+const DIMENSIONS = Dimensions.get("screen");
+
 interface Props {
   word?: AbstractWord;
+  emptyText: string;
   type: "thesaurus" | "collocations";
   navigation: StackNavigationProp<any, any>;
 }
@@ -95,9 +100,22 @@ export default abstract class SearchScreenView extends React.Component<Props, St
   }
 
   render() {
+
+    let emptyText = this.props.emptyText;
+    if (this.state.searching) {
+      emptyText = "...";
+    } else if (this.state.searchString) {
+      emptyText = "Nič nije najdeno."
+    }
+
     return (
       <React.Fragment>
         <ScrollView>
+          {(this.state.results.length == 0) && <View style={{flex: 1, alignItems: "center", alignContent: "center", paddingHorizontal: 30}}>
+            <Text style={{flex: 1, fontSize: 24, color: "#ccc", alignItems: "center", alignSelf: "center"}}>
+              {emptyText}
+            </Text>
+          </View>}
           {this.state.results.map((word, index) => [
             index > 0 ? <HorizontalLine key={"h" + index} color="#ddd" /> : undefined,
             <WordInfo
