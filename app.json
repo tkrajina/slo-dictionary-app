@@ -24,10 +24,10 @@
       },
       "permissions": [
       ],
-      "versionCode": 4
+      "versionCode": 5
     },
     "ios": {
-      "buildNumber": "0.0.4",
+      "buildNumber": "0.0.5",
       "bundleIdentifier": "hr.scio.slo",
       "config": {
         "usesNonExemptEncryption": false
