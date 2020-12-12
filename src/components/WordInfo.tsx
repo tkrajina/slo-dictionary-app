@@ -331,7 +331,7 @@ class Link extends React.Component<LinkProps> {
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.onClick(this.props.word)}>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", padding: 10 }}>
           <View style={{ flex: 1 }}>
             <Text style={{color: "#005be5", fontSize: 18}}>{this.props.text} <Text style={{fontStyle: "italic", fontWeight: "bold"}}>{this.props.italicText}</Text></Text>
           </View>
