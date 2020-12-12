@@ -14,8 +14,6 @@ import { Dimensions } from 'react-native';
 
 const LIMIT = 100;
 
-const DIMENSIONS = Dimensions.get("screen");
-
 interface Props {
   word?: AbstractWord;
   emptyText: string;
@@ -24,6 +22,7 @@ interface Props {
 }
 
 class State {
+  initialized = false;
   searchString: string | undefined;
   searching = false;
   results: AbstractWord[] = [];
@@ -39,7 +38,11 @@ export default abstract class SearchScreenView extends React.Component<Props, St
   }
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State): State | null {
+    if (prevState.initialized) {
+      return null;
+    }
     if (nextProps.word && prevState.results.length == 0) {
+      prevState.initialized = true;
       prevState.results.push(nextProps.word);
       prevState.searchString = `=${nextProps.word.searchString}`
       return prevState;
