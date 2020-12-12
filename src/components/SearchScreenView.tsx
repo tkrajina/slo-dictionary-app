@@ -16,7 +16,7 @@ const LIMIT = 100;
 
 interface Props {
   word?: AbstractWord;
-  emptyText: string;
+  noResultsText: string;
   type: "thesaurus" | "collocations";
   navigation: StackNavigationProp<any, any>;
 }
@@ -104,7 +104,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
 
   render() {
 
-    let emptyText = this.props.emptyText;
+    let emptyText = this.props.noResultsText;
     if (this.state.searching) {
       emptyText = "...";
     } else if (this.state.searchString) {
@@ -137,7 +137,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
             onChangeText={this.callbackOnSearchStringAsync.bind(this)}
             style={[LAYOUT_STYLES.flex1, { borderRadius: 10, fontSize: 18, marginHorizontal: 10, marginVertical: 5 }]}
           />
-          <TouchableWithoutFeedback onPress={this.callbackOnReset.bind(this)}>
+          <TouchableWithoutFeedback onPress={this.callbackOnReset}>
             <View style={[LAYOUT_STYLES.centerContent, { width: 40 }]}>
               <View style={[LAYOUT_STYLES.centerSelf, { opacity: 0.5 }]}>
                 {this.state.searching && <ActivityIndicator size="small" color="#aaa" />}
