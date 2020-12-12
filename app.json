@@ -16,9 +16,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "package": "hr.scio.slo",
       "adaptiveIcon": {
@@ -29,6 +26,20 @@
       ],
       "versionCode": 4
     },
+    "ios": {
+      "buildNumber": "0.0.4",
+      "bundleIdentifier": "hr.scio.slo",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+      },
+      "supportsTablet": true
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }
