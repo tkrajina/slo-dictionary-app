@@ -68,6 +68,7 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
           </View>
           <View style={{ height: 80 }}>
             <Button title="Naključna beseda (sopomenke)" onPress={this.callbackOnReloadThesaurus} />
+            <View style={{marginVertical: 5}}></View>
             <Button title="Naključna beseda (kolokacije)" onPress={this.callbackOnReloadCollocation} />
           </View>
         </View>
