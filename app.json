@@ -2,7 +2,7 @@
   "expo": {
     "name": "Slo sopomenke",
     "slug": "slo-sopomenke",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       },
       "permissions": [
       ],
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"

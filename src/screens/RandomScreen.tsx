@@ -1,14 +1,11 @@
 import { default as React } from "react";
-import { ActivityIndicator, Alert, Button, View } from "react-native";
+import { ActivityIndicator, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { AppScreenView } from "../components/AppScreenView";
 import { WordInfo } from "../components/WordInfo";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
-import { replace } from "../navigation";
-import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
 import { CleanupContainer } from "../utils/cleanup";
-import { Model } from "../utils/dao";
 import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 

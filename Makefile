@@ -83,9 +83,9 @@ build: build-android build-ios
 	echo "OK"
 
 .PHONY: build-android
-build-android: assert-all-commited update-version
+build-android: assert-all-commited
 	expo build:android
 
 .PHONY: build-ios
-build-ios: assert-all-commited update-version
+build-ios: assert-all-commited
 	expo build:ios
