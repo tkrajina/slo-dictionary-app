@@ -201,7 +201,7 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
-      <TouchableOpacity onPress={() => this.props.callbackOnClickWord(word[1])}>
+      <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: 60, paddingTop: 8 }}>
             <Progress width={55} height={12} percentage={score} color={color} />
