@@ -1,4 +1,5 @@
 import { default as React } from "react";
+import { ScrollView } from "react-native-gesture-handler";
 import { AppScreenView } from "../components/AppScreenView";
 import { SimplifiedMarkdown } from "../components/SimplifiedMarkdown";
 import { CleanupContainer } from "../utils/cleanup";
@@ -24,7 +25,9 @@ export default class InfoScreen extends React.Component<ScreenProps> {
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Info">
-        <SimplifiedMarkdown text={MARKDOWN} />
+        <ScrollView>
+          <SimplifiedMarkdown text={MARKDOWN} />
+        </ScrollView>
       </AppScreenView>
     );
   }
