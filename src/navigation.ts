@@ -1,9 +1,8 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigationRoute } from "react-navigation";
 import { Params, Routes, Stacks } from "./routes";
-import * as Toasts from "./utils/toasts";
 
-export function navigate(navigation: StackNavigationProp<any, any>, stack: Stacks, route: Routes, params: any) {
+export function replace(navigation: StackNavigationProp<any, any>, stack: Stacks, route: Routes, params: any) {
   return navigation.replace("root", {
     screen: stack,
     params: {

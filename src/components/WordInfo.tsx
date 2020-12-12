@@ -4,7 +4,7 @@ import { Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LINK_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
-import { navigate } from "../navigation";
+import { replace } from "../navigation";
 import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
 import * as Utils from "../utils/utils";
@@ -58,9 +58,9 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   callbackOnGotoWord(word: AbstractWord) {
     if (word instanceof ThesaurusEntry) {
-      navigate(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: word})
+      replace(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: word})
     } else if (word instanceof CollocationEntry) {
-      navigate(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: word})
+      replace(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: word})
     } else {
       console.error(`Unknown word ${word}`)
     }

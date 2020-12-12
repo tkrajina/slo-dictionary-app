@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { AppScreenView } from "../components/AppScreenView";
 import { WordInfo } from "../components/WordInfo";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
-import { navigate } from "../navigation";
+import { replace } from "../navigation";
 import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
 import { CleanupContainer } from "../utils/cleanup";
