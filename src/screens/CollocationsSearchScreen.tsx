@@ -44,7 +44,7 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
           word={this.state.initialWord}
           type="collocations"
           navigation={this.props.navigation}
-          noResultsText="Kolokacije so besedne zveze, ki niso več naključne, ampak so kot take že ustaljene v jeziku."
+          noResultsMarkdown="**Kolokacije** so besedne zveze, ki niso več naključne, ampak so kot take že ustaljene v jeziku."
         />
       </AppScreenView>
     );

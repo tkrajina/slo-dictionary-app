@@ -187,17 +187,17 @@ export class SimplifiedMarkdown extends React.PureComponent<SimplifiedMarkdownPr
             title = t;
             return "";
           });
-          let fontSize = 14;
+          let fontScale = 1;
           switch (hashes.length) {
             case 1:
-              fontSize *= 1.6;
+              fontScale *= 1.6;
             case 2:
-              fontSize *= 1.4;
+              fontScale *= 1.4;
             case 3:
-              fontSize *= 1.2;
+              fontScale *= 1.2;
           }
           res.push(
-            <MDText key={key} style={{ fontSize: fontSize, fontWeight: "bold" }}>
+            <MDText key={key} fontScale={fontScale} style={{ fontWeight: "bold" }}>
               {this.simpleTextToElements(title)}
             </MDText>
           );
@@ -288,7 +288,9 @@ function splitSimpleText(md: string): (string | number)[] {
   return parts;
 }
 
-interface MDTextProps extends TextProps {}
+interface MDTextProps extends TextProps {
+  fontScale?: number;
+}
 export class MDText extends React.PureComponent<MDTextProps> {
   constructor(props: MDTextProps) {
     super(props);
@@ -301,6 +303,7 @@ export class MDText extends React.PureComponent<MDTextProps> {
     if (Utils.isEmpty(props.style)) {
       props.style = {};
     }
+    (props.style as any)["fontSize"] = 14 * (this.props.fontScale || 1);
     return <Text {...props}>{this.props.children}</Text>;
   }
 }

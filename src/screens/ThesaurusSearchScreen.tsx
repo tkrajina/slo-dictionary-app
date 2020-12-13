@@ -42,7 +42,7 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
           word={this.state.initialWord}
           type="thesaurus"
           navigation={this.props.navigation}
-          noResultsText="Sopomenka (sinonim) je beseda, ki ima skoraj enak pomen kot kaka druga beseda."
+          noResultsMarkdown="**Sopomenka** (sinonim) je beseda, ki ima skoraj enak pomen kot kaka druga beseda."
         />
       </AppScreenView>
     );
