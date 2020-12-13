@@ -98,9 +98,9 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   renderLongWords() {
     if (this.props.word instanceof ThesaurusEntry) {
-      return <LongThesaurus info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnGotoThesaurusByString} />;
+      return <LongThesaurus word={this.props.word.word} info={this.infoAsThesaurus()} callbackOnClickWord={this.callbackOnGotoThesaurusByString} />;
     } else if (this.props.word instanceof CollocationEntry) {
-      return <LongCollocation info={this.infoAsCollocation()} />;
+      return <LongCollocation word={this.props.word.word} info={this.infoAsCollocation()} />;
     }
     return <Text>Unknown: {JSON.stringify(this.props.word.info())}</Text>;
   }
@@ -173,6 +173,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 }
 
 interface LongThesaurusProps {
+  word: string;
   info: [number, string][][][];
   callbackOnClickWord: (word: string) => void;
 }
@@ -200,7 +201,7 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
 
   callbackOnShare(w: string) {
     Share.share({
-      message: w,
+      message: `${this.props.word}: ${w}`,
     })
   }
 
@@ -290,10 +291,11 @@ class ShortCollocation extends React.Component<ShortCollocationProps> {
 }
 
 interface LongCollocationProps {
+  word: string;
   info: [number, string][][];
 }
 class LongCollocation extends React.Component<LongCollocationProps> {
-  constructor(props: ShortCollocationProps) {
+  constructor(props: LongCollocationProps) {
     super(props);
   }
   render() {
@@ -312,6 +314,12 @@ class LongCollocation extends React.Component<LongCollocationProps> {
     );
   }
 
+  callbackOnShare(w: string) {
+    Share.share({
+      message: `${this.props.word}: ${w}`,
+    })
+  }
+
   renderWord(word: [number, string]) {
     const score = Math.max(0, Math.min(0.99, word[0] / 100));
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
@@ -324,6 +332,11 @@ class LongCollocation extends React.Component<LongCollocationProps> {
           </View>
           <View style={{ flex: 1, padding: 2 }}>
             <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
+          </View>
+          <View style={{ width: 30 }}>
+            <TouchableOpacity key={word[1]} onPress={() => this.callbackOnShare(word[1])}>
+              <Image source={SHARE_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
+            </TouchableOpacity>
           </View>
         </View>
       </React.Fragment>
