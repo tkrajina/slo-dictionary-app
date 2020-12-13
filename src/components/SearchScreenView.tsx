@@ -113,10 +113,8 @@ export default abstract class SearchScreenView extends React.Component<Props, St
       <React.Fragment>
         <ScrollView>
           {this.state.results.length == 0 && (
-            <View style={{ flex: 1, alignItems: "center", alignContent: "center", paddingHorizontal: 30,  }}>
-              <Text style={{color: "#ccc"}}>
-                <SimplifiedMarkdown fontScale={1.5} text={emptyText} />
-              </Text>
+            <View style={{ paddingHorizontal: 30,  }}>
+              <SimplifiedMarkdown fontScale={1.5} text={emptyText} />
             </View>
           )}
           {this.state.results.map((word, index) => [
