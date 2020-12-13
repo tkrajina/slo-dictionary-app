@@ -33,7 +33,7 @@ export default class InfoScreen extends React.Component<ScreenProps> {
   }
 }
 
-const MARKDOWN = `## Thesaurus of modern Slovene language
+const MARKDOWN = `## Thesaurus and Collocations of modern Slovene language
 
 This application is an unofficial offline viewer of the:
 
