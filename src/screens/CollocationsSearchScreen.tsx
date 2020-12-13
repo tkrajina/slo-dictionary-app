@@ -9,7 +9,7 @@ import * as Utils from "../utils/utils";
 import { ScreenProps } from "./common";
 
 class State {
-  initialWord: AbstractWord | undefined;
+  initialWord: AbstractWord | undefined;
 }
 
 export default class CollocationsSearchScreen extends React.Component<ScreenProps, State> {
@@ -27,7 +27,7 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
     const word = getParam(this.props.route, Params.WORD);
     if (word) {
       this.setState({
-        initialWord: word
+        initialWord: word,
       });
     }
   };
@@ -39,7 +39,13 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
   render() {
     return (
       <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje kolokacij">
-        <SearchScreenView key={`collocations/${this.state.initialWord?.id}`} word={this.state.initialWord} type="collocations" navigation={this.props.navigation} noResultsText="Kolokacije so besedne zveze, ki niso več naključne, ampak so kot take že ustaljene v jeziku." />
+        <SearchScreenView
+          key={`collocations/${this.state.initialWord?.id}`}
+          word={this.state.initialWord}
+          type="collocations"
+          navigation={this.props.navigation}
+          noResultsText="Kolokacije so besedne zveze, ki niso več naključne, ampak so kot take že ustaljene v jeziku."
+        />
       </AppScreenView>
     );
   }

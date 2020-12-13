@@ -66,48 +66,50 @@ const MainStackNavigator = createStackNavigator();
 const BottomTabNavigator = createBottomTabNavigator();
 
 function BottomTabs(props: {}) {
-    return <BottomTabNavigator.Navigator
-          tabBarOptions={{
-            inactiveTintColor: "#bbb",
-            activeTintColor: "black",
-            keyboardHidesTabBar: true,
-            // keyboardHidesTabBar: true,
-            tabStyle: { paddingTop: 5, paddingBottom: 5 },
-          }}
-        >
-          <BottomTabNavigator.Screen
-            name={Stacks.SEARCH_THESAURUS}
-            component={ThesaurusStack}
-            options={{
-              tabBarLabel: "Sopomenke",
-              tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
-            }}
-          />
-          <BottomTabNavigator.Screen
-            name={Stacks.SEARCH_COLLOCATIONS}
-            component={CollocationsStack}
-            options={{
-              tabBarLabel: "Kolokacije",
-              tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
-            }}
-          />
-          <BottomTabNavigator.Screen
-            name={Stacks.RANDOM}
-            component={RandomStack}
-            options={{
-              tabBarLabel: "Naključna beseda",
-              tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={AUTORENEW_24PX} />,
-            }}
-          />
-          <BottomTabNavigator.Screen
-            name={Stacks.INFO}
-            component={InfoStack}
-            options={{
-              tabBarLabel: "Info",
-              tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_INFO_24PX} />,
-            }}
-          />
-        </BottomTabNavigator.Navigator>
+  return (
+    <BottomTabNavigator.Navigator
+      tabBarOptions={{
+        inactiveTintColor: "#bbb",
+        activeTintColor: "black",
+        keyboardHidesTabBar: true,
+        // keyboardHidesTabBar: true,
+        tabStyle: { paddingTop: 5, paddingBottom: 5 },
+      }}
+    >
+      <BottomTabNavigator.Screen
+        name={Stacks.SEARCH_THESAURUS}
+        component={ThesaurusStack}
+        options={{
+          tabBarLabel: "Sopomenke",
+          tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
+        }}
+      />
+      <BottomTabNavigator.Screen
+        name={Stacks.SEARCH_COLLOCATIONS}
+        component={CollocationsStack}
+        options={{
+          tabBarLabel: "Kolokacije",
+          tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
+        }}
+      />
+      <BottomTabNavigator.Screen
+        name={Stacks.RANDOM}
+        component={RandomStack}
+        options={{
+          tabBarLabel: "Naključna beseda",
+          tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={AUTORENEW_24PX} />,
+        }}
+      />
+      <BottomTabNavigator.Screen
+        name={Stacks.INFO}
+        component={InfoStack}
+        options={{
+          tabBarLabel: "Info",
+          tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_INFO_24PX} />,
+        }}
+      />
+    </BottomTabNavigator.Navigator>
+  );
 }
 
 const ThesaurusStackNavigator = createStackNavigator();

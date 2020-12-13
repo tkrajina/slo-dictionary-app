@@ -19,8 +19,8 @@ interface WordInfoProps {
   navigation: StackNavigationProp<any, any>;
 }
 class WordInfoState {
-  thesaurusSearchWord: ThesaurusEntry | undefined;
-  collocationsSearchWord: CollocationEntry | undefined;
+  thesaurusSearchWord: ThesaurusEntry | undefined;
+  collocationsSearchWord: CollocationEntry | undefined;
 }
 export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
   constructor(props: WordInfoProps) {
@@ -58,11 +58,11 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
 
   callbackOnGotoWord(word: AbstractWord) {
     if (word instanceof ThesaurusEntry) {
-      replace(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, {[Params.WORD]: word})
+      replace(this.props.navigation, Stacks.SEARCH_THESAURUS, Routes.SEARCH_THESAURUS, { [Params.WORD]: word });
     } else if (word instanceof CollocationEntry) {
-      replace(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, {[Params.WORD]: word})
+      replace(this.props.navigation, Stacks.SEARCH_COLLOCATIONS, Routes.SEARCH_COLLOCATIONS, { [Params.WORD]: word });
     } else {
-      console.error(`Unknown word ${word}`)
+      console.error(`Unknown word ${word}`);
     }
   }
 
@@ -88,7 +88,9 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
           {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text="Sopomenke od" italicText={this.state.thesaurusSearchWord.word} onClick={this.callbackOnGotoWord} />}
-          {!!this.state.collocationsSearchWord && <Link word={this.state.collocationsSearchWord} text="Kolokacije od" italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />}
+          {!!this.state.collocationsSearchWord && (
+            <Link word={this.state.collocationsSearchWord} text="Kolokacije od" italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />
+          )}
         </View>
       </React.Fragment>
     );
@@ -330,16 +332,18 @@ class Link extends React.Component<LinkProps> {
   }
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.onClick(this.props.word)}>
-        <View style={{ flexDirection: "row", padding: 10 }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{color: "#005be5", fontSize: 18}}>{this.props.text} <Text style={{fontStyle: "italic", fontWeight: "bold"}}>{this.props.italicText}</Text></Text>
-          </View>
-          <View style={{ width: 30 }}>
-            <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
-          </View>
+      <View style={{ flexDirection: "row", padding: 10 }}>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity onPress={() => this.props.onClick(this.props.word)}>
+            <Text style={{ color: "#005be5", fontSize: 18 }}>
+              {this.props.text} <Text style={{ fontStyle: "italic", fontWeight: "bold" }}>{this.props.italicText}</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+        <View style={{ width: 30 }}>
+          <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
+        </View>
+      </View>
     );
   }
 }

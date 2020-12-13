@@ -7,9 +7,9 @@ export function replace(navigation: StackNavigationProp<any, any>, stack: Stacks
     screen: stack,
     params: {
       screen: route,
-      params: params
-    }
-  })
+      params: params,
+    },
+  });
 }
 
 export function push(navigation: StackNavigationProp<any, any>, stack: Stacks, route: Routes, params: any) {

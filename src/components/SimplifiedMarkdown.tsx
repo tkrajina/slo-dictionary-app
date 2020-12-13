@@ -288,8 +288,7 @@ function splitSimpleText(md: string): (string | number)[] {
   return parts;
 }
 
-interface MDTextProps extends TextProps {
-}
+interface MDTextProps extends TextProps {}
 export class MDText extends React.PureComponent<MDTextProps> {
   constructor(props: MDTextProps) {
     super(props);
