@@ -2,7 +2,7 @@
   "expo": {
     "name": "Slo sopomenke",
     "slug": "slo-sopomenke",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,16 +18,17 @@
     ],
     "android": {
       "package": "hr.scio.slo",
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/icon_app_1024x1024.png"
       },
       "permissions": [
       ],
-      "versionCode": 6
+      "versionCode": 7
     },
     "ios": {
-      "buildNumber": "0.0.6",
+      "buildNumber": "0.0.7",
       "bundleIdentifier": "hr.scio.slo",
       "config": {
         "usesNonExemptEncryption": false
