@@ -1,16 +1,16 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, Share } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { LINK_24PX } from "../images_generated";
+import { LINK_24PX, SHARE_24PX } from "../images_generated";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { replace } from "../navigation";
 import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
+import * as Toasts from "../utils/toasts";
 import * as Utils from "../utils/utils";
 import { HorizontalLine } from "./HorizontalLine";
 import { Progress } from "./Progress";
-import * as Toasts from "../utils/toasts";
 
 interface WordInfoProps {
   word: AbstractWord;
@@ -198,24 +198,35 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
     );
   }
 
+  callbackOnShare(w: string) {
+    Share.share({
+      message: w,
+    })
+  }
+
   renderWord(word: [number, string]) {
     const score = Math.max(0, Math.min(0.99, word[0] / 0.4));
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
-      <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ width: 60, paddingTop: 8 }}>
-            <Progress width={55} height={12} percentage={score} color={color} />
-          </View>
-          <View style={{ flex: 1, padding: 2 }}>
-            <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
-          </View>
-          <View style={{ width: 30 }}>
-            <Image source={LINK_24PX} style={{ opacity: 0.25 }} />
-          </View>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ width: 60, paddingTop: 8 }}>
+          <Progress width={55} height={12} percentage={score} color={color} />
         </View>
-      </TouchableOpacity>
+        <View style={{ flex: 1, padding: 2 }}>
+          <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
+            <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ width: 60, flexDirection: "row" }}>
+          <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
+            <Image source={LINK_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
+          </TouchableOpacity>
+          <TouchableOpacity key={word[1]} onPress={() => this.callbackOnShare(word[1])}>
+            <Image source={SHARE_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
