@@ -3,6 +3,7 @@ import { ActivityIndicator, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { AppScreenView } from "../components/AppScreenView";
 import { WordInfo } from "../components/WordInfo";
+import { MESSAGES } from "../localization";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { stores } from "../stores/RootStore";
 import { CleanupContainer } from "../utils/cleanup";
@@ -55,7 +56,7 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
 
   render() {
     return (
-      <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Naključna beseda">
+      <AppScreenView withDefaultPadding navigation={this.props.navigation} title={MESSAGES.randomWord}>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <View style={{ flex: 1 }}>
             <ScrollView>
@@ -64,9 +65,9 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
             </ScrollView>
           </View>
           <View style={{ height: 80 }}>
-            <Button title="Naključna beseda (sopomenke)" onPress={this.callbackOnReloadThesaurus} />
+            <Button title={`${MESSAGES.randomWord} (${MESSAGES.thesaurus})`} onPress={this.callbackOnReloadThesaurus} />
             <View style={{ marginVertical: 5 }}></View>
-            <Button title="Naključna beseda (kolokacije)" onPress={this.callbackOnReloadCollocation} />
+            <Button title={`${MESSAGES.randomWord} (${MESSAGES.collocations})`} onPress={this.callbackOnReloadCollocation} />
           </View>
         </View>
       </AppScreenView>

@@ -24,7 +24,8 @@
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
-    "expo-device": "~2.3.0"
+    "expo-device": "~2.3.0",
+    "expo-localization": "~9.0.0"
   },
   "devDependencies": {
     "@expo/metro-config": "^0.1.39",

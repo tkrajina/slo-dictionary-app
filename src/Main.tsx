@@ -6,6 +6,7 @@ import { Image, Text } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Center } from "./components/Center";
 import { AUTORENEW_24PX, BASELINE_INFO_24PX, BASELINE_SEARCH_24PX } from "./images_generated";
+import { MESSAGES } from "./localization";
 import { Routes, Stacks } from "./routes";
 import CollocationsSearchScreen from "./screens/CollocationsSearchScreen";
 import InfoScreen from "./screens/InfoScreen";
@@ -80,7 +81,7 @@ function BottomTabs(props: {}) {
         name={Stacks.SEARCH_THESAURUS}
         component={ThesaurusStack}
         options={{
-          tabBarLabel: "Sopomenke",
+          tabBarLabel: MESSAGES.thesaurus,
           tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
         }}
       />
@@ -88,7 +89,7 @@ function BottomTabs(props: {}) {
         name={Stacks.SEARCH_COLLOCATIONS}
         component={CollocationsStack}
         options={{
-          tabBarLabel: "Kolokacije",
+          tabBarLabel: MESSAGES.collocations,
           tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_SEARCH_24PX} />,
         }}
       />
@@ -96,7 +97,7 @@ function BottomTabs(props: {}) {
         name={Stacks.RANDOM}
         component={RandomStack}
         options={{
-          tabBarLabel: "Naključna beseda",
+          tabBarLabel: MESSAGES.randomWord,
           tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={AUTORENEW_24PX} />,
         }}
       />
@@ -104,7 +105,7 @@ function BottomTabs(props: {}) {
         name={Stacks.INFO}
         component={InfoStack}
         options={{
-          tabBarLabel: "Info",
+          tabBarLabel: MESSAGES.info,
           tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_INFO_24PX} />,
         }}
       />

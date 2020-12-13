@@ -1,6 +1,7 @@
 import { default as React } from "react";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
+import { MESSAGES } from "../localization";
 import { AbstractWord } from "../models/models";
 import { getParam } from "../navigation";
 import { Params } from "../routes";
@@ -38,13 +39,13 @@ export default class CollocationsSearchScreen extends React.Component<ScreenProp
 
   render() {
     return (
-      <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje kolokacij">
+      <AppScreenView withDefaultPadding navigation={this.props.navigation} title={MESSAGES.collocationsSearchTitle}>
         <SearchScreenView
           key={`collocations/${this.state.initialWord?.id}`}
           word={this.state.initialWord}
           type="collocations"
           navigation={this.props.navigation}
-          noResultsMarkdown="**Kolokacije** so besedne zveze, ki niso več naključne, ampak so kot take že ustaljene v jeziku."
+          noResultsMarkdown={MESSAGES.collocationsEmptyScreen}
         />
       </AppScreenView>
     );

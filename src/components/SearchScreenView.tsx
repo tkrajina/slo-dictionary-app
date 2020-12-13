@@ -2,6 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
 import { ActivityIndicator, Image, ScrollView, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { BASELINE_CANCEL_24PX, BASELINE_SEARCH_24PX } from "../images_generated";
+import { MESSAGES } from "../localization";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { stores } from "../stores/RootStore";
 import { LAYOUT_STYLES } from "../styles/styles";
@@ -130,7 +131,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
         </ScrollView>
         <View style={[LAYOUT_STYLES.directionRow, { borderWidth: 1, borderColor: "#ddd", height: 50, borderRadius: 10 }]}>
           <TextInput
-            placeholder="Iskanje"
+            placeholder={MESSAGES.search}
             value={this.state.searchString}
             onChangeText={this.callbackOnSearchStringAsync.bind(this)}
             style={[LAYOUT_STYLES.flex1, { borderRadius: 10, fontSize: 18, marginHorizontal: 10, marginVertical: 5 }]}

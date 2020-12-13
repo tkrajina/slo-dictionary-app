@@ -1,6 +1,7 @@
 import { default as React } from "react";
 import { AppScreenView } from "../components/AppScreenView";
 import SearchScreenView from "../components/SearchScreenView";
+import { MESSAGES } from "../localization";
 import { AbstractWord } from "../models/models";
 import { getParam } from "../navigation";
 import { Params } from "../routes";
@@ -36,13 +37,13 @@ export default class ThesaurusSearchScreen extends React.Component<ScreenProps, 
 
   render() {
     return (
-      <AppScreenView withDefaultPadding navigation={this.props.navigation} title="Iskanje sopomenk">
+      <AppScreenView withDefaultPadding navigation={this.props.navigation} title={MESSAGES.thesaurusSearchTitle}>
         <SearchScreenView
           key={`thesaurus/${this.state.initialWord?.id}`}
           word={this.state.initialWord}
           type="thesaurus"
           navigation={this.props.navigation}
-          noResultsMarkdown="**Sopomenka** (sinonim) je beseda, ki ima skoraj enak pomen kot kaka druga beseda."
+          noResultsMarkdown={MESSAGES.thesaurusEmptyScreen}
         />
       </AppScreenView>
     );
