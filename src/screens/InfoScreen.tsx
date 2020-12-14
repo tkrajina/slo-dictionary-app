@@ -48,7 +48,7 @@ Collocations authors: **Iztok Kosem, Polona Gantar, Simon Krek, Špela Arhar Hol
 
 The data is published under Creative Commons Attribution-ShareAlike International 4.0.
 
-Read more about on:
+Read more on:
 
 * https://viri.cjvt.si/sopomenke/eng/about
 * https://viri.cjvt.si/kolokacije/slv/about
