@@ -43,6 +43,7 @@ build-db:
 
 .PHONY: import-db
 import-db:
+	mkdir -p assets/db
 	cp $(IMPORTER_PATH)/dict.sqlite3 assets/db/dict.sqlite
 
 .PHONY: build-and-import-db
