@@ -105,7 +105,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
   render() {
     let emptyText = this.props.noResultsMarkdown;
     if (this.state.searching) {
-      emptyText = "...";
+      emptyText = "";
     } else if (this.state.searchString) {
       emptyText = MESSAGES.nothingFound;;
     }
@@ -118,6 +118,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
               <SimplifiedMarkdown fontScale={1.5} text={emptyText} />
             </View>
           )}
+          {this.state.searching && <ActivityIndicator />}
           {this.state.results.map((word, index) => [
             index > 0 ? <HorizontalLine key={"h" + index} color="#ddd" /> : undefined,
             <WordInfo
