@@ -1,3 +1,3 @@
 # Privacy
 
-This application collect no personal information from the user.
+This application collect no personal informations from the user.
