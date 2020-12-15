@@ -107,7 +107,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     if (this.state.searching) {
       emptyText = "...";
     } else if (this.state.searchString) {
-      emptyText = "Nič ni najdeno.";
+      emptyText = MESSAGES.nothingFound;;
     }
 
     return (
