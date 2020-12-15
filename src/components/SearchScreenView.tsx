@@ -66,6 +66,13 @@ export default abstract class SearchScreenView extends React.Component<Props, St
   }
 
   async searchAsync(text: string) {
+    if (!text || !text.trim()) {
+      this.setState({
+        results: [],
+        searching: false,
+      });
+      return;
+    }
     text = text.trim().toLowerCase();
     let results: AbstractWord[];
     if (!text) {
