@@ -98,7 +98,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
       searching: true,
     });
     clearTimeout(this.timeout);
-    this.timeout = this.cleanup.setTimeout(() => this.searchAsync(text), 1000);
+    this.timeout = this.cleanup.setTimeout(() => this.searchAsync(text), text ? 1000 : 0);
   }
 
   private callbackOnReset() {
