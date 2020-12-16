@@ -125,8 +125,8 @@ export default abstract class SearchScreenView extends React.Component<Props, St
               <SimplifiedMarkdown fontScale={1.5} text={emptyText} />
             </View>
           )}
-          {this.state.searching && <ActivityIndicator />}
-          {this.state.results.map((word, index) => [
+          {this.state.searching && <ActivityIndicator size="large" color="#888" />}
+          {!this.state.searching && this.state.results.map((word, index) => [
             index > 0 ? <HorizontalLine key={"h" + index} color="#ddd" /> : undefined,
             <WordInfo
               key={`${this.props.type} ${word.id} ${this.state.results.length == 1}`}
