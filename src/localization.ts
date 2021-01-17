@@ -12,6 +12,7 @@ interface Messages {
     collocationsEmptyScreen: string
     randomWordTitle: string
     randomWord: string
+    history: string
     info: string
     search: string
     word: string
@@ -31,7 +32,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         randomWordTitle: "Random word",
         search: "Search",
         word: "Word",
-        nothingFound: "Nothing found"
+        nothingFound: "Nothing found",
+        history: "Search history"
     },
     sl: {
         thesaurus: "Sopomenke",
@@ -46,7 +48,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         randomWordTitle: "Naključna beseda",
         search: "Iskanje",
         word: "Beseda",
-        nothingFound: "Nič ni najdeno"
+        nothingFound: "Nič ni najdeno",
+        history: "Zgodovina iskanja"
     },
 }
 

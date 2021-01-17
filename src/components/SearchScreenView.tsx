@@ -61,6 +61,12 @@ export default abstract class SearchScreenView extends React.Component<Props, St
     }
   }
 
+  componentDidMount() {
+    if (this.props.word) {
+      stores.addHistory(this.props.word);
+    }
+  }
+
   componentWillUnmount() {
     this.cleanup.cleanup();
   }
@@ -83,6 +89,9 @@ export default abstract class SearchScreenView extends React.Component<Props, St
       // Using > is much faster than "like 'text%'":
       results = await stores.dao.query(this.getModelClass(), `where search_str >= ? limit ${LIMIT}`, [text]);
       results = results.filter((w) => w.word.trim().toLowerCase().startsWith(text));
+    }
+    if (results.length == 1) {
+      stores.addHistory(results[0]);
     }
     this.setState({
       results: results,

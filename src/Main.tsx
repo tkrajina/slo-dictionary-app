@@ -5,10 +5,11 @@ import React from "react";
 import { Image, Text } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Center } from "./components/Center";
-import { AUTORENEW_24PX, BASELINE_INFO_24PX, BASELINE_SEARCH_24PX } from "./images_generated";
+import { AUTORENEW_24PX, BASELINE_FORMAT_LIST_BULLETED_24PX, BASELINE_INFO_24PX, BASELINE_SEARCH_24PX } from "./images_generated";
 import { MESSAGES } from "./localization";
 import { Routes, Stacks } from "./routes";
 import CollocationsSearchScreen from "./screens/CollocationsSearchScreen";
+import HistoryScreen from "./screens/HistoryScreen";
 import InfoScreen from "./screens/InfoScreen";
 import RandomScreen from "./screens/RandomScreen";
 import ThesaurusSearchScreen from "./screens/ThesaurusSearchScreen";
@@ -94,6 +95,14 @@ function BottomTabs(props: {}) {
         }}
       />
       <BottomTabNavigator.Screen
+        name={Stacks.HISTORY}
+        component={HistoryStack}
+        options={{
+          tabBarLabel: MESSAGES.history,
+          tabBarIcon: ({ focused, color, size }) => <Image style={{ alignSelf: "center", opacity: focused ? 1 : 0.3 }} source={BASELINE_FORMAT_LIST_BULLETED_24PX} />,
+        }}
+      />
+      <BottomTabNavigator.Screen
         name={Stacks.RANDOM}
         component={RandomStack}
         options={{
@@ -146,6 +155,15 @@ function RandomStack(props: {}) {
     <RandomStackNavigator.Navigator headerMode="none">
       <RandomStackNavigator.Screen name={Routes.RANDOM} component={RandomScreen} />
     </RandomStackNavigator.Navigator>
+  );
+}
+
+const HistoryStackNavigator = createStackNavigator();
+function HistoryStack(props: {}) {
+  return (
+    <HistoryStackNavigator.Navigator headerMode="none">
+      <HistoryStackNavigator.Screen name={Routes.HISTORY} component={HistoryScreen} />
+    </HistoryStackNavigator.Navigator>
   );
 }
 

@@ -1,11 +1,11 @@
 import { Asset } from "expo-asset";
 import * as FileSystem from "expo-file-system";
-import { Keyboard, Platform } from "react-native";
-import { CollocationEntry, ThesaurusEntry } from "../models/models";
-import { Observable } from "../utils/observable";
+import { Alert, Keyboard, Platform } from "react-native";
+import { AbstractWord, CollocationEntry, TableName, ThesaurusEntry } from "../models/models";
+import { AsyncPersistedVariable } from "../utils/async_var";
 import { Dao } from "../utils/dao";
+import { Observable } from "../utils/observable";
 import * as Toasts from "../utils/toasts";
-import { ApplicationStore } from "./ApplicationStore";
 
 export const DATABASE_FILE = `db4.sqlite`;
 
@@ -27,8 +27,8 @@ const storeInstances: { [dbFile: string]: any } = {};
 export class RootStore {
   public ready = new Observable<boolean>(false);
   public keyboardHeight = new Observable<number>(0);
+  public history = new AsyncPersistedVariable("__history__", [] as [TableName, string][]);
 
-  public readonly app: ApplicationStore = new ApplicationStore(this);
   public dao: Dao;
 
   constructor(databaseFile: string, public readonly isTest: boolean) {
@@ -53,6 +53,8 @@ export class RootStore {
 
     setImmediate(async () => {
       try {
+        await this.history.loadAsync();
+
         let file = await Asset.fromModule(require("../../assets/db/dict.sqlite")).downloadAsync();
         console.log("local url=" + file.localUri);
         const dbFileUrl = `${FileSystem.documentDirectory as string}${DATABASE_FILE}`;
@@ -67,8 +69,10 @@ export class RootStore {
         // By default expo-sqlite searched in SQLite dir, but ios woN't allow to write there, that's why the "../" here
         this.dao = new Dao("../" + DATABASE_FILE);
 
-        await this.initModels();
-        await Promise.all([this.app.initAsync()]);
+        await Promise.all([
+          this.initModels(),
+          this.history.loadAsync()
+        ]);
         this.ready.set(true);
       } catch (e) {
         console.error("Error initializing:");
@@ -80,6 +84,21 @@ export class RootStore {
 
   private async initModels() {
     await Promise.all([this.dao.registerModelAsync(ThesaurusEntry), this.dao.registerModelAsync(CollocationEntry)]);
+  }
+
+  public addHistory(w: AbstractWord) {
+    const h = this.history.get() || [];
+    for (let i = 0; i < h.length; i++) {
+      if (i < 3 && h[i][0] === w.tableName && h[i][1] === w.word) {
+        return; // Already added, nothing to do here
+      }
+    }
+    if (h.length > 100) {
+      h.pop()
+      h.pop()
+    }
+    h.unshift([w.tableName, w.word]);
+    this.history.set(h);
   }
 }
 

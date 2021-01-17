@@ -1,6 +1,6 @@
 import { Model, ModelDescriptor, Types } from "../utils/dao";
 
-type TableName = "thesaurus" | "collocations";
+export type TableName = "thesaurus" | "collocations";
 
 export abstract class AbstractWord extends Model<number> {
   word: string = "";
