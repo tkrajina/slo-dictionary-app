@@ -51,6 +51,10 @@ export default class RandomScreen extends React.Component<ScreenProps, State> {
     const words = await stores.dao.query(cls as any, "where id=? limit 1", [id]);
     this.setState({
       word: (words[0] || new ThesaurusEntry()) as AbstractWord,
+    }, () => {
+      if (this.state.word) {
+        stores.addHistory(this.state.word);
+      }
     });
   }
 

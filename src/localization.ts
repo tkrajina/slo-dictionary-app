@@ -16,6 +16,7 @@ interface Messages {
     info: string
     search: string
     word: string
+    clearHistory: string;
 }
 
 const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
@@ -33,7 +34,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         search: "Search",
         word: "Word",
         nothingFound: "Nothing found",
-        history: "Search history"
+        history: "Search history",
+        clearHistory: "Clear history"
     },
     sl: {
         thesaurus: "Sopomenke",
@@ -49,7 +51,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         search: "Iskanje",
         word: "Beseda",
         nothingFound: "Nič ni najdeno",
-        history: "Zgodovina iskanja"
+        history: "Zgodovina iskanja",
+        clearHistory: "Izbriši vse"
     },
 }
 

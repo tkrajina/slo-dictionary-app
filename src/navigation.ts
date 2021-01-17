@@ -12,6 +12,16 @@ export function replace(navigation: StackNavigationProp<any, any>, stack: Stacks
   });
 }
 
+export function navigate(navigation: StackNavigationProp<any, any>, stack: Stacks, route: Routes, params: any) {
+  return navigation.navigate("root", {
+    screen: stack,
+    params: {
+      screen: route,
+      params: params,
+    },
+  });
+}
+
 export function push(navigation: StackNavigationProp<any, any>, stack: Stacks, route: Routes, params: any) {
   const p = { screen: route, params: params };
   console.log(`push to ${stack} with ${JSON.stringify(p)}`);

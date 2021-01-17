@@ -1,3 +1,6 @@
 # slo-dictionary-app
 
-TODO
+- history
+    - delete from history
+    - clear history
+- share single word
