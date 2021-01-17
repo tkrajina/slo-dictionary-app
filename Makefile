@@ -6,22 +6,22 @@ IMPORTER_PATH=${GOPATH}/src/github.com/tkrajina/slo-dictionary-importer
 generate-images:
 	tools/create_pngs.sh
 
-.PHONY: npm-reinstall
-npm-reinstall:
+.PHONY: yarn-reinstall
+yarn-reinstall:
 	rn -Rf node_modules
-	npm install
+	yarn install
 
-.PHONY: npm-install
-npm-install:
-	npm install
+.PHONY: yarn-install
+yarn-install:
+	yarn install --frozen-lockfile
 
 .PHONY: tsc-watch
 tsc-watch: clean
-	npm run tsc-watch
+	yarn run tsc-watch
 
 .PHONY: lint
 lint:
-	npm run lint
+	yarn run lint
 
 .PHONY: clean
 clean:
