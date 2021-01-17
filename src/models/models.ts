@@ -1,5 +1,7 @@
 import { Model, ModelDescriptor, Types } from "../utils/dao";
 
+type TableName = "thesaurus" | "collocations";
+
 export abstract class AbstractWord extends Model<number> {
   word: string = "";
   info_json: string = "";
@@ -9,14 +11,14 @@ export abstract class AbstractWord extends Model<number> {
     super();
   }
 
-  abstract tableName(): string;
+  abstract tableName: TableName;
 
   info(): object {
     return JSON.parse(this.info_json);
   }
 
   getModelDescriptor(): ModelDescriptor<AbstractWord> {
-    return new ModelDescriptor<AbstractWord>(this.tableName(), Types.INTEGER)
+    return new ModelDescriptor<AbstractWord>(this.tableName, Types.INTEGER)
       .withUniqueColumn(
         "word",
         Types.TEXT,
@@ -43,9 +45,7 @@ export class ThesaurusEntry extends AbstractWord {
     super();
   }
 
-  tableName() {
-    return "thesaurus";
-  }
+  tableName: TableName = "thesaurus";
 }
 
 export class CollocationEntry extends AbstractWord {
@@ -53,7 +53,5 @@ export class CollocationEntry extends AbstractWord {
     super();
   }
 
-  tableName() {
-    return "collocations";
-  }
+  tableName: TableName = "collocations";
 }
