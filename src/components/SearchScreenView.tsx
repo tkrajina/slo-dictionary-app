@@ -102,6 +102,10 @@ export default abstract class SearchScreenView extends React.Component<Props, St
   timeout: any;
 
   async callbackOnSearchStringAsync(text: string) {
+    if (text.length < (this.state.searchString || "").length && text.startsWith("=")) {
+      text = text.substr(1);
+    }
+
     this.setState({
       searchString: text,
       searching: true,
@@ -150,7 +154,7 @@ export default abstract class SearchScreenView extends React.Component<Props, St
           <TextInput
             placeholder={MESSAGES.search}
             value={this.state.searchString}
-            onChangeText={this.callbackOnSearchStringAsync.bind(this)}
+            onChangeText={this.callbackOnSearchStringAsync}
             style={[LAYOUT_STYLES.flex1, { borderRadius: 10, fontSize: 18, marginHorizontal: 10, marginVertical: 5 }]}
           />
           <TouchableWithoutFeedback onPress={this.callbackOnReset}>
