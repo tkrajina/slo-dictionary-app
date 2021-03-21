@@ -2,7 +2,7 @@
   "expo": {
     "name": "Slo sopomenke",
     "slug": "slo-sopomenke",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,10 +25,10 @@
       },
       "permissions": [
       ],
-      "versionCode": 13
+      "versionCode": 14
     },
     "ios": {
-      "buildNumber": "0.0.13",
+      "buildNumber": "0.0.14",
       "bundleIdentifier": "hr.scio.slo",
       "config": {
         "usesNonExemptEncryption": false
