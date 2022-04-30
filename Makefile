@@ -8,7 +8,7 @@ generate-images:
 
 .PHONY: yarn-reinstall
 yarn-reinstall:
-	rn -Rf node_modules
+	rm -Rf node_modules
 	yarn install
 
 .PHONY: yarn-install
