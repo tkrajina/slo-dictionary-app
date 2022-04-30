@@ -26,6 +26,6 @@ export class ErrorBoundary extends React.Component<any, ErrorBoundaryState> {
         </View>
       );
     }
-    return this.props.children;
+    return <>{this.props.children}</>;
   }
 }

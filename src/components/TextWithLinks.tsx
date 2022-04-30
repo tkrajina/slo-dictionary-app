@@ -1,4 +1,4 @@
-import { Linking } from "expo";
+import * as Linking from 'expo-linking';
 import { default as React } from "react";
 import { TextProps, Text } from "react-native";
 

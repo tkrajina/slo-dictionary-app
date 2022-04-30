@@ -1,7 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
-import { Image, Platform, StatusBar, StyleSheet, Text, View, ViewStyle } from "react-native";
-import { SafeAreaView } from "react-navigation";
+import { Image, Platform, SafeAreaView, StatusBar, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { SLO } from "../images_generated";
 import { Routes } from "../routes";
 import { stores } from "../stores/RootStore";
