@@ -90,7 +90,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           {this.renderLongWords()}
           {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text="Sopomenke od" italicText={this.state.thesaurusSearchWord.word} onClick={this.callbackOnGotoWord} />}
           {!!this.state.collocationsSearchWord && (
-            <Link word={this.state.collocationsSearchWord} text="Kolokacije od" italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />
+            <Link word={this.state.collocationsSearchWord} text={MESSAGES.collocationsOf} italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />
           )}
         </View>
       </React.Fragment>

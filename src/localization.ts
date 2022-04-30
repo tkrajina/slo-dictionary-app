@@ -9,6 +9,7 @@ interface Messages {
     nothingFound: string
     collocationsSearchTitle: string
     collocations:string
+    collocationsOf:string
     collocationsEmptyScreen: string
     randomWordTitle: string
     randomWord: string
@@ -35,7 +36,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         word: "Word",
         nothingFound: "Nothing found",
         history: "Search history",
-        clearHistory: "Clear history"
+        clearHistory: "Clear history",
+        collocationsOf: "Collocations of"
     },
     sl: {
         thesaurus: "Sopomenke",
@@ -52,7 +54,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         word: "Beseda",
         nothingFound: "Nič ni najdeno",
         history: "Zgodovina iskanja",
-        clearHistory: "Izbriši vse"
+        clearHistory: "Izbriši vse",
+        collocationsOf: "Kolokacije od"
     },
 }
 
