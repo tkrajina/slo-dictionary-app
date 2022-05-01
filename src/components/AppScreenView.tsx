@@ -15,7 +15,7 @@ interface AppScreenViewProps {
   navigation: StackNavigationProp<any, any>;
 }
 class AppScreenViewState {
-  keyboardHeight = stores.keyboardHeight;
+  keyboardHeight = 0;
 }
 
 export class AppScreenView extends React.Component<AppScreenViewProps, AppScreenViewState> {
@@ -32,7 +32,8 @@ export class AppScreenView extends React.Component<AppScreenViewProps, AppScreen
   }
 
   willFocus() {
-    this.cleanup.triggerObservableStateChanges("app screen", this);
+    const that = this;
+    this.cleanup.addObservableListener("keyboard", stores.keyboardHeight, this.callbackOnReloadBottomMargin.bind(this));
   }
 
   didBlur() {
@@ -45,6 +46,13 @@ export class AppScreenView extends React.Component<AppScreenViewProps, AppScreen
     }
   }
 
+  callbackOnReloadBottomMargin() {
+    this.setState({
+      keyboardHeight: stores.keyboardHeight.get()
+    }, () => {
+    });
+  }
+
   callbackOnBack() {
     this.props.navigation.goBack();
   }
@@ -54,9 +62,11 @@ export class AppScreenView extends React.Component<AppScreenViewProps, AppScreen
   }
 
   render() {
+    const style = {...styles.safeAreaView, backgroundColor: "#b9cffb", marginBottom: this.state.keyboardHeight } as ViewStyle;
     return (
-      <SafeAreaView style={[styles.safeAreaView, { backgroundColor: "#b9cffb", paddingBottom: Platform.OS === "ios" ? this.state.keyboardHeight.get() : 0 }]}>
-        <View style={{ height: StatusBar.currentHeight ? StatusBar.currentHeight : undefined }} />
+      <SafeAreaView style={style}>
+        <StatusBar barStyle="dark-content" backgroundColor={"white"} />
+        <View style={{ height: StatusBar.currentHeight || 0 /* ??? */ }} />
         <View style={[{ height: 40, paddingHorizontal: 10, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#999", backgroundColor: "#b9cffb" }]}>
           <Image style={{ alignSelf: "center", opacity: 0.5, width: 50, height: 50, resizeMode: "contain" }} source={SLO} />
           <Text style={{ paddingLeft: 10, paddingTop: 6, alignSelf: "flex-start", fontSize: 20, color: "#333", fontStyle: "italic" }}>{this.props.title}</Text>
