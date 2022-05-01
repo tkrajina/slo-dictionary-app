@@ -18,6 +18,7 @@ interface Messages {
     search: string
     word: string
     clearHistory: string;
+    synonymsOf: string;
 }
 
 const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
@@ -37,7 +38,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         nothingFound: "Nothing found",
         history: "Search history",
         clearHistory: "Clear history",
-        collocationsOf: "Collocations of"
+        collocationsOf: "Collocations of",
+        synonymsOf: "Synonyms of"
     },
     sl: {
         thesaurus: "Sopomenke",
@@ -55,7 +57,8 @@ const MSGS_BY_LANGUAGE: {[locale: string]: Messages} = {
         nothingFound: "Nič ni najdeno",
         history: "Zgodovina iskanja",
         clearHistory: "Izbriši vse",
-        collocationsOf: "Kolokacije od"
+        collocationsOf: "Kolokacije od",
+        synonymsOf: "Sopomenke od"
     },
 }
 
