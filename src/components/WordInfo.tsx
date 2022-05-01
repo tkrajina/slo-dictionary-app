@@ -1,13 +1,14 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { default as React } from "react";
-import { Image, Text, View, Share } from "react-native";
+import { Image, Text, View, Share, Linking, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { LINK_24PX, SHARE_24PX } from "../images_generated";
+import { LINK_24PX, PUBLIC_BLACK_24DP, SHARE_24PX } from "../images_generated";
 import { MESSAGES } from "../localization";
 import { AbstractWord, CollocationEntry, ThesaurusEntry } from "../models/models";
 import { replace } from "../navigation";
 import { Params, Routes, Stacks } from "../routes";
 import { stores } from "../stores/RootStore";
+import { LAYOUT_STYLES } from "../styles/styles";
 import * as Toasts from "../utils/toasts";
 import * as Utils from "../utils/utils";
 import { HorizontalLine } from "./HorizontalLine";
@@ -67,6 +68,25 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
     }
   }
 
+  callbackOnShare() {
+    Share.share({
+      message: this.props.word.word,
+    })
+  }
+
+  async callbackOnOpenWebsite() {
+    let url = `https://viri.cjvt.si/ajax_api/v1/slv/search/sopomenke/${this.props.word.word.toLowerCase()}`;
+    if (this.props.word instanceof CollocationEntry) {
+      url = `https://viri.cjvt.si/ajax_api/v1/slv/search/kolokacije/${this.props.word.word.toLowerCase()}`;
+    }
+    try {
+      const jsn = await (await fetch(url)).json();
+      Linking.openURL(JSON.parse(jsn["json"])["url"]);
+    } catch (e) {
+      Alert.alert("Error opening link");
+    }
+  }
+
   render() {
     if (this.props.long) {
       return this.renderLong();
@@ -79,7 +99,19 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
       <React.Fragment>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: "#888", fontSize: 10 }}>{MESSAGES.word}:</Text>
-          <Text style={{ fontSize: 40, paddingLeft: 20 }}>{this.renderWithHighlight(this.props.word.word)}</Text>
+          <View style={LAYOUT_STYLES.directionRow}>
+            <View style={LAYOUT_STYLES.flex1}>
+              <Text style={{ fontSize: 35, paddingLeft: 20 }}>{this.renderWithHighlight(this.props.word.word)}</Text>
+            </View>
+            <View style={{flexDirection: "row", paddingTop: 10}}>
+              <TouchableOpacity onPress={this.callbackOnOpenWebsite}>
+                <Image source={PUBLIC_BLACK_24DP} style={{ opacity: 0.25, marginHorizontal: 3 }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.callbackOnShare}>
+                <Image source={SHARE_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
         <View style={{ marginTop: 5 }}>
           <Text style={{ color: "#888", fontSize: 10 }}>
@@ -88,7 +120,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
           </Text>
           <HorizontalLine color="#ddd" />
           {this.renderLongWords()}
-          {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text="Sopomenke od" italicText={this.state.thesaurusSearchWord.word} onClick={this.callbackOnGotoWord} />}
+          {!!this.state.thesaurusSearchWord && <Link word={this.state.thesaurusSearchWord} text={MESSAGES.synonymsOf} italicText={this.state.thesaurusSearchWord.word} onClick={this.callbackOnGotoWord} />}
           {!!this.state.collocationsSearchWord && (
             <Link word={this.state.collocationsSearchWord} text={MESSAGES.collocationsOf} italicText={this.state.collocationsSearchWord.word} onClick={this.callbackOnGotoWord} />
           )}
@@ -150,7 +182,7 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
     while (rest) {
       let pos = rest.toLowerCase().indexOf(highlight);
       if (pos < 0) {
-        res.push(<Text key={rest}>{rest}</Text>);
+        res.push(<Text>{rest}</Text>);
         rest = "";
       } else if (pos === 0) {
         res.push(
@@ -160,9 +192,9 @@ export class WordInfo extends React.Component<WordInfoProps, WordInfoState> {
         );
         rest = rest.substr(highlight.length);
       } else if (pos > 0) {
-        res.push(<Text key={rest + "1"}>{rest.substr(0, pos)}</Text>);
+        res.push(<Text>{rest.substr(0, pos)}</Text>);
         res.push(
-          <Text key={rest + "2"} style={{ fontWeight: "bold" }}>
+          <Text style={{ fontWeight: "bold" }}>
             {rest.substr(pos, highlight.length)}
           </Text>
         );
@@ -200,10 +232,16 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
     );
   }
 
-  callbackOnShare(w: string) {
-    Share.share({
-      message: `${this.props.word}: ${w}`,
-    })
+  callbackOnShare(w?: string) {
+    if (w) {
+      Share.share({
+        message: `${this.props.word}: ${w}`,
+      })
+    } else {
+      Share.share({
+        message: `${this.props.word}: ${w}`,
+      })
+    }
   }
 
   renderWord(word: [number, string]) {
@@ -211,20 +249,20 @@ class LongThesaurus extends React.Component<LongThesaurusProps> {
     const colors = [/*'e', 'd', 'c',*/ "b", "a", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"]; // TODO: extract
     const color = "#" + colors[Math.trunc(score * colors.length)].repeat(3);
     return (
-      <View key={`${word[1]}`} style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row" }}>
         <View style={{ width: 60, paddingTop: 8 }}>
           <Progress width={55} height={12} percentage={score} color={color} />
         </View>
         <View style={{ flex: 1, padding: 2 }}>
-          <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
+          <TouchableOpacity onPress={() => this.props.callbackOnClickWord(word[1])}>
             <Text style={{ color: color, fontSize: 16 }}>{word[1]}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ width: 60, flexDirection: "row" }}>
-          <TouchableOpacity key={word[1]} onPress={() => this.props.callbackOnClickWord(word[1])}>
+          <TouchableOpacity onPress={() => this.props.callbackOnClickWord(word[1])}>
             <Image source={LINK_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
           </TouchableOpacity>
-          <TouchableOpacity key={word[1]} onPress={() => this.callbackOnShare(word[1])}>
+          <TouchableOpacity onPress={() => this.callbackOnShare(word[1])}>
             <Image source={SHARE_24PX} style={{ opacity: 0.25, marginHorizontal: 3 }} />
           </TouchableOpacity>
         </View>
